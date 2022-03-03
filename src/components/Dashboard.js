@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
+import Track from './Track.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -11,7 +12,7 @@ const Dashboard = ({ code }) => {
     const accessToken = useAuth(code);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    
+    console.log(searchResults);
     useEffect(() => {
         if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
@@ -53,18 +54,19 @@ const Dashboard = ({ code }) => {
         setSearchTerm(e.target.value);
     }
 
-    /*const handleOnSubmit = (e) => {
+    const handleOnSubmit = (e) => {
+        // prevents page refresh
+        e.preventDefault();
         // only search the term if it isn't empty
         if (searchTerm) {
             // call API
-            // reset searchTerm
-            setSearchTerm("")
+           
         }
 
-    }*/
+    } 
     return (
         <div className="dashboard">
-            <form>
+            <form onSubmit={handleOnSubmit}>
                 <input
                     type="search"
                     className="searchBar"
@@ -75,7 +77,16 @@ const Dashboard = ({ code }) => {
             </form>
 
             <div className="songsContainer">
-                songs
+                {searchResults.map((track, index) => {
+                    return (
+                        <Track
+                            key={track.uri}
+                            track={track}
+                            number={index + 1}
+                        />
+                    )
+                }
+                )}
             </div>
 
         </div>

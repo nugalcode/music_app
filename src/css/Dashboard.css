@@ -4,6 +4,7 @@
     flex-direction: column;
     padding: 20px;
     height: 100vh;
+    background-color: black;
 }
 .searchBar {
     padding: 10px;
@@ -11,8 +12,11 @@
     margin: 10px;
 }
 
-.songContainer {
+.songsContainer {
     display: flex;
-    flex-grow: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: var(--myGray);
     overflow-y: auto;
 }

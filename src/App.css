@@ -1,6 +1,7 @@
 :root {
     --myGreen: rgb(30, 215, 96);
     --myBlack: rgb(25, 20, 20);
+    --myGray: rgb(40, 40, 43);
 }
 
 .App {

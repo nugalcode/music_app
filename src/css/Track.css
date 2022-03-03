@@ -1,0 +1,28 @@
+.track {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px 5px 10px;
+    width: inherit;
+    background-color: rgb(25, 20, 20, 0.8);
+    color: white;
+}
+
+    .track:hover {
+        background-color: rgb(52, 52, 52);
+    }
+
+.track img {
+    height: 64px;
+    width: 64px;
+    padding: 0px 10px 0px 10px;
+}
+
+.titleAndArtistWrap {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 10px 20px;
+}
+
+.songNumber {
+    padding: 5px;
+}
