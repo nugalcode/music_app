@@ -1,11 +1,18 @@
 .dashboard {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    height: 100vh;
 }
 .searchBar {
     padding: 10px;
     border-radius: 10px;
     margin: 10px;
-    background-color: var(--myBlack);
-    color: white;
+}
+
+.songContainer {
+    display: flex;
+    flex-grow: 1;
+    overflow-y: auto;
 }
