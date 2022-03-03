@@ -4,3 +4,17 @@
     align-items: center;
     min-height: 100vh;
 }
+
+.loginButton {
+    background-color: var(--myGreen);
+    height: 20px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    letter-spacing: 0.2rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: Helvetica, sans-serif;
+}
