@@ -1,7 +1,8 @@
 .track {
     display: flex;
     align-items: center;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px 5px 20px;
+    height: 65px;
     width: inherit;
     background-color: rgb(25, 20, 20, 0.8);
     color: white;
@@ -24,5 +25,26 @@
 }
 
 .songNumber {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.playAndNumberWrap {
+    display: flex;
+    height: 10px;
+    width: 10px;
     padding: 5px;
+    position: relative;
+   
+}
+
+.trackPlayArrowIcon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
