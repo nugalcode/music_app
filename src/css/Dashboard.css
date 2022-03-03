@@ -1,0 +1,11 @@
+.dashboard {
+    display: flex;
+    justify-content: center;
+}
+.searchBar {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: var(--myBlack);
+    color: white;
+}
