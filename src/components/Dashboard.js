@@ -13,7 +13,7 @@ function convertDuration(ms) {
     var minutes = Math.floor(ms/ 60000);
     var seconds = ((ms % 60000) / 1000).toFixed(0);
     return (
-        seconds == 60 ?
+        seconds === 60 ?
             (minutes + 1) + ":00" :
             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
     );
@@ -24,8 +24,10 @@ const Dashboard = ({ code }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [playingTrack, setPlayingTrack] = useState();
+    const [currentUris, setCurrentUris] = useState([]);
 
     function chooseTrack(track) {
+        setCurrentUris(searchResults);
         setPlayingTrack(track);
     }
     //console.log(searchResults);
@@ -44,7 +46,7 @@ const Dashboard = ({ code }) => {
             console.log(res.body.tracks);
             if (cancel) return
             setSearchResults(
-                res.body.tracks.items.map(track => {
+                res.body.tracks.items.map((track, index) => {
                     // find the smallest album image
                     const smallestAlbumImage = track.album.images.reduce(
                         (smallest, image) => {
@@ -62,6 +64,7 @@ const Dashboard = ({ code }) => {
                         uri: track.uri,
                         albumUrl: smallestAlbumImage.url,
                         duration: duration,
+                        offset: index,
                     }
                 })
             )
@@ -112,7 +115,7 @@ const Dashboard = ({ code }) => {
             </div>
 
             <div className="playerWrap">
-                <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+                <Player accessToken={accessToken} currentTrack={playingTrack} tracks={currentUris}/>
             </div>
 
         </div>
