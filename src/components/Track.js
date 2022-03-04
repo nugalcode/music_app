@@ -9,20 +9,6 @@ const Track = ({ track, number }) => {
 
     const [hover, setHover] = useState(false);
 
-    useEffect(() => {
-
-        const handleOnHover = (e) => {
-            // if the mouse is on this component, then set hover to true
-            // else set it to false
-            
-        }
-
-        //document.addEventListener()
-
-        // on return, remove the eventlistener
-        return 
-    })
-
     return (
         <div className="track"
             onMouseEnter={() => setHover(true)}
