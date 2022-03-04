@@ -5,9 +5,13 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
  *  @track is passed down from Dashboard
  *   containing artist, title, uri, albumUrl
  */
-const Track = ({ track, number }) => {
+const Track = ({ track, number, chooseTrack }) => {
 
     const [hover, setHover] = useState(false);
+
+    const handlePlay = () => {
+        chooseTrack(track);
+    }
 
     return (
         <div className="track"
@@ -16,7 +20,7 @@ const Track = ({ track, number }) => {
         >
             <div className="playAndNumberWrap">
                 { hover ?
-                    <PlayArrowIcon className="trackPlayArrowIcon"/>
+                    <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()}/>
                     : <div className="songNumber"> {number} </div>
                 }
             </div>
@@ -25,6 +29,7 @@ const Track = ({ track, number }) => {
                 <div> {track.title} </div> 
                 <div> {track.artist} </div>
             </div>
+            <div className="trackDuration"> {track.duration} </div>
         </div>
     )
 

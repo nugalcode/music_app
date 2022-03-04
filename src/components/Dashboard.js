@@ -3,16 +3,26 @@ import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
 import Track from './Track.js';
+import Player from './Player.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
 })
 
+function convertDuration(ms) {
+    return ms / 1000;
+}
+
 const Dashboard = ({ code }) => {
     const accessToken = useAuth(code);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    console.log(searchResults);
+    const [playingTrack, setPlayingTrack] = useState();
+
+    function chooseTrack(track) {
+        setPlayingTrack(track);
+    }
+    //console.log(searchResults);
     useEffect(() => {
         if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
@@ -25,6 +35,7 @@ const Dashboard = ({ code }) => {
 
         spotifyApi.searchTracks(searchTerm).then(res => {
             // if a new request comes in before a request finishes, then cancel previous one
+            console.log(res.body.tracks);
             if (cancel) return
             setSearchResults(
                 res.body.tracks.items.map(track => {
@@ -36,11 +47,15 @@ const Dashboard = ({ code }) => {
                         },
                         track.album.images[0]
                     )
+
+                    const duration = convertDuration(track.duration_ms);
+
                     return {
                         artist: track.artists[0].name,
                         title: track.name,
                         uri: track.uri,
                         albumUrl: smallestAlbumImage.url,
+                        duration: duration,
                     }
                 })
             )
@@ -83,10 +98,15 @@ const Dashboard = ({ code }) => {
                             key={track.uri}
                             track={track}
                             number={index + 1}
+                            chooseTrack={chooseTrack}
                         />
                     )
                 }
                 )}
+            </div>
+
+            <div>
+                <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
             </div>
 
         </div>
