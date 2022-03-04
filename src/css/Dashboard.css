@@ -16,7 +16,18 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    height: 100%;
     width: 100%;
     background-color: var(--myGray);
     overflow-y: auto;
 }
+
+.playerWrap {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--myGray);
+}
+

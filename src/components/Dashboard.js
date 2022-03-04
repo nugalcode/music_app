@@ -10,7 +10,13 @@ const spotifyApi = new SpotifyWebApi({
 })
 
 function convertDuration(ms) {
-    return ms / 1000;
+    var minutes = Math.floor(ms/ 60000);
+    var seconds = ((ms % 60000) / 1000).toFixed(0);
+    return (
+        seconds == 60 ?
+            (minutes + 1) + ":00" :
+            minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+    );
 }
 
 const Dashboard = ({ code }) => {
@@ -105,7 +111,7 @@ const Dashboard = ({ code }) => {
                 )}
             </div>
 
-            <div>
+            <div className="playerWrap">
                 <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
             </div>
 
