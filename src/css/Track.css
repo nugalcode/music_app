@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px 10px 10px 20px;
+    width: 33%;
 }
 
     .titleAndArtistWrap div {
@@ -51,6 +52,12 @@
     right: 5px;
 }
 
+.albumName {
+    display: flex;
+    min-width: 20%;
+    padding: 5px;
+}
+
 .trackDuration {
     display: flex;
     margin-left: auto;
@@ -58,4 +65,20 @@
     min-width: 20%;
     justify-content: center;
     flex-shrink: 0;
+}
+
+.TrackHeader {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 5px 10px 5px 20px;
+    height: 65px;
+    width: inherit;
+    background-color: rgb(25, 20, 20, 0.8);
+    text-transform: uppercase;
+    border-bottom: 0.1rem solid dimgrey;
+}
+
+.TrackHeader .titleAndArtistWrap {
+    width: 40%;
 }

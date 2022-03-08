@@ -5,6 +5,7 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import Track from './Track.js';
 import Player from './Player.js';
 import LeftSideBar from './LeftSideBar.js';
+import TrackHeader from './TrackHeader.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -67,6 +68,7 @@ const Dashboard = ({ code }) => {
             if (cancel) return
             setSearchResults(
                 res.body.tracks.items.map((track, index) => {
+                    console.log(track);
                     // find the smallest album image
                     const smallestAlbumImage = track.album.images.reduce(
                         (smallest, image) => {
@@ -82,6 +84,7 @@ const Dashboard = ({ code }) => {
                         artist: track.artists[0].name,
                         title: track.name,
                         uri: track.uri,
+                        albumName: track.album.name,
                         albumUrl: smallestAlbumImage.url,
                         duration: duration,
                         offset: index,
@@ -126,6 +129,7 @@ const Dashboard = ({ code }) => {
                 </form>
 
                 <div className="songsContainer">
+                    <TrackHeader />
                     {searchResults.map((track, index) => {
                         return (
                             <Track

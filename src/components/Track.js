@@ -30,6 +30,11 @@ const Track = ({ track, number, chooseTrack }) => {
                 <div> {track.title} </div> 
                 <div> {track.artist} </div>
             </div>
+
+            <div className="albumName">
+                {track.albumName}
+            </div>
+
             <div className="trackDuration"> {track.duration} </div>
         </div>
     )
