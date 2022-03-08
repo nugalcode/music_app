@@ -5,8 +5,13 @@ import Dashboard from './components/Dashboard';
 // get the code from the url
 const code = new URLSearchParams(window.location.search).get('code');
 
-function App() {
+ function App() {
     return code ? <Dashboard code={code} /> : <Login />
-}
+} 
+
+/*
+function App() {
+    return <Dashboard code={code} />
+} */
 
 export default App;

@@ -17,10 +17,11 @@ const Track = ({ track, number, chooseTrack }) => {
         <div className="track"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            onClick={() => handlePlay()}
         >
             <div className="playAndNumberWrap">
                 { hover ?
-                    <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()}/>
+                    <PlayArrowIcon className="trackPlayArrowIcon" />
                     : <div className="songNumber"> {number} </div>
                 }
             </div>

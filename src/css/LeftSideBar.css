@@ -1,0 +1,34 @@
+.LeftSideBar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 200px;
+    background-color: aqua;
+    margin-right: auto;
+    flex-grow: 0;
+}
+
+.nav {
+    display: flex;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
+    padding: 3px;
+    margin-top: 50px;
+}
+
+.navItemWrap {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+    .navItemWrap div {
+        margin-left: 10px;
+    }
+
+    .navItemWrap:hover {
+        background-color: var(--myGray);
+    }

@@ -4,6 +4,7 @@ import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
 import Track from './Track.js';
 import Player from './Player.js';
+import LeftSideBar from './LeftSideBar.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -27,10 +28,29 @@ const Dashboard = ({ code }) => {
     const [currentUris, setCurrentUris] = useState([]);
 
     function chooseTrack(track) {
-        setCurrentUris(searchResults);
         setPlayingTrack(track);
     }
-    //console.log(searchResults);
+
+    useEffect(() => {
+        if (!playingTrack) return
+        // if the song we're playing is in a different list of songs
+        const handleFunc = () => {
+            const check = (element) => {
+                return element === playingTrack.uri
+            };
+
+          //  if (!currentUris.length || !currentUris.some(check)) {
+                console.log("uris is changing")
+                setCurrentUris(
+                    searchResults.map((track) => {
+                        return track.uri
+                    })
+                )
+            //}
+        }
+        handleFunc();
+    }, [playingTrack, searchResults])
+    
     useEffect(() => {
         if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
@@ -43,7 +63,7 @@ const Dashboard = ({ code }) => {
 
         spotifyApi.searchTracks(searchTerm).then(res => {
             // if a new request comes in before a request finishes, then cancel previous one
-            console.log(res.body.tracks);
+            
             if (cancel) return
             setSearchResults(
                 res.body.tracks.items.map((track, index) => {
@@ -90,32 +110,38 @@ const Dashboard = ({ code }) => {
     } 
     return (
         <div className="dashboard">
-            <form onSubmit={handleOnSubmit}>
-                <input
-                    type="search"
-                    className="searchBar"
-                    placeholder="Search Song or Artist"
-                    value={searchTerm}
-                    onChange={handleOnChange}
-                />
-            </form>
 
-            <div className="songsContainer">
-                {searchResults.map((track, index) => {
-                    return (
-                        <Track
-                            key={track.uri}
-                            track={track}
-                            number={index + 1}
-                            chooseTrack={chooseTrack}
-                        />
-                    )
-                }
-                )}
+            <LeftSideBar />
+
+            <div className="dashboardCenter">
+
+                <form onSubmit={handleOnSubmit}>
+                    <input
+                        type="search"
+                        className="searchBar"
+                        placeholder="Search Song or Artist"
+                        value={searchTerm}
+                        onChange={handleOnChange}
+                    />
+                </form>
+
+                <div className="songsContainer">
+                    {searchResults.map((track, index) => {
+                        return (
+                            <Track
+                                key={track.uri}
+                                track={track}
+                                number={index + 1}
+                                chooseTrack={chooseTrack}
+                            />
+                        )
+                    }
+                    )}
+                </div>
+
             </div>
-
             <div className="playerWrap">
-                <Player accessToken={accessToken} currentTrack={playingTrack} tracks={currentUris}/>
+                <Player accessToken={accessToken} currentTrack={playingTrack} uris={currentUris}/>
             </div>
 
         </div>

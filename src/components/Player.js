@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback'
-//uris = { trackUri? [trackUri]: [] }
-export default function Player({ accessToken, currentTrack, tracks }) {
+
+export default function Player({ accessToken, currentTrack, uris }) {
     const [play, setPlay] = useState(false);
-    const [uris, setUris] = useState([]);
     const [offset, setOffset] = useState(0);
 
     useEffect(() => {
-        setUris(
-            tracks.map((track) =>
-            {
-                return track.uri
-            })
-        )
-    }, [tracks])
-    
-    useEffect(() => {
         if (!currentTrack) return
 
+        
+        console.log(currentTrack.artist);
+        const handleFunc = () => {
+            setOffset(currentTrack.offset)
+        }
+
+        handleFunc();
+    }, [currentTrack, setOffset]) 
+
+    useEffect(() => {
         setPlay(true);
-        setOffset(currentTrack.offset)
-    }, [currentTrack])
+    }, [offset, uris])
 
     if (!accessToken) return null
 
@@ -28,7 +27,11 @@ export default function Player({ accessToken, currentTrack, tracks }) {
         token={accessToken}
         showSaveIcon
         callback={state => {
-            if (!state.isPlaying) setPlay(false)
+            if (!state.isPlaying) {
+                setPlay(false);
+            }
+            else
+                setPlay(true);
         }}
         play={play}
         offset={offset}
