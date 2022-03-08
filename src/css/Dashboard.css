@@ -11,12 +11,15 @@
     flex-grow: 1;
 }
 
+.searchForm {
+    display: flex;
+    align-self: center;
+}
 .searchBar {
     display: flex;
     padding: 10px;
     border-radius: 30px;
     margin: 10px;
-    align-self: center;
     outline: none;
 }
 
@@ -26,7 +29,8 @@
     background-color: var(--myGray);
     overflow-y: auto;
     height: 85%;
-    overflow-x:  clip;
+    overflow-x: clip;
+    
 }
 
 .playerWrap {

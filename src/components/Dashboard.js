@@ -118,7 +118,7 @@ const Dashboard = ({ code }) => {
 
             <div className="dashboardCenter">
 
-                <form onSubmit={handleOnSubmit}>
+                <form className="searchForm" onSubmit={handleOnSubmit}>
                     <input
                         type="search"
                         className="searchBar"
