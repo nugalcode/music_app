@@ -26,7 +26,7 @@
     background-color: var(--myGray);
     overflow-y: auto;
     height: 85%;
-   
+    overflow-x:  clip;
 }
 
 .playerWrap {
