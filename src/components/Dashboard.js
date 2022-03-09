@@ -27,7 +27,7 @@ const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
-
+    
     function chooseTrack(track) {
         setPlayingTrack(track);
     }

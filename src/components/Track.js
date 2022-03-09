@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 /**
@@ -7,17 +7,40 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
  */
 const Track = ({ track, number, chooseTrack }) => {
 
+    const [isCurrent, setIsCurrent] = useState(false);
     const [hover, setHover] = useState(false);
+    const ref = useRef();
+
+    /*const handleClick = () => {
+        setPlaying(true);
+    }*/
 
     const handlePlay = () => {
         chooseTrack(track);
+        //handleClick();
     }
+
+    useEffect(() => {
+        const handleTitle = (e) => {
+            // if the click is not on this component, then set playing to false
+            if (ref.current && !ref.current.contains(e.target)) {
+                setIsCurrent(false);
+            }
+            else if (ref.current && ref.current.contains(e.target)) {
+                setIsCurrent(true);
+            }
+        }
+
+        document.addEventListener('mouseup', handleTitle);
+        return () => document.removeEventListener('mouseup', handleTitle)
+    })
 
     return (
         <div className="track"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={() => handlePlay()}
+            ref={ref}
         >
             <div className="playAndNumberWrap">
                 { hover ?
@@ -27,7 +50,7 @@ const Track = ({ track, number, chooseTrack }) => {
             </div>
             <img src={track.albumUrl} alt="track_pic" />
             <div className="titleAndArtistWrap">
-                <div> {track.title} </div> 
+                <div className={isCurrent ? "greenTitle" : ""}> {track.title} </div>
                 <div> {track.artist} </div>
             </div>
 

@@ -29,6 +29,10 @@
         
     }
 
+.greenTitle {
+    color: var(--myGreen);
+}
+
 .songNumber {
     position: absolute;
     top: 0;
@@ -82,3 +86,5 @@
 .TrackHeader .titleAndArtistWrap {
     width: 40%;
 }
+
+
