@@ -54,8 +54,8 @@ const Track = ({ track, number, chooseTrack }) => {
             <img src={track.albumUrl} alt="track_pic" />
 
             <div className="titleAndArtistWrap">
-                <span className={isCurrent ? "titleContent greenTitle" : "titleContent"}> {track.title} </span>
-                <span className="titleContent"> {track.artist} </span>
+                <span className={isCurrent ? "title greenTitle" : "title"}> {track.title} </span>
+                <span className="artist"> {track.artist} </span>
             </div>
 
             <div className="albumName">

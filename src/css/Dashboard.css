@@ -30,7 +30,7 @@
     overflow-y: auto;
     height: 85%;
     overflow-x: clip;
-    
+    color: var(--myGrayFontColor);
 }
 
 .playerWrap {
