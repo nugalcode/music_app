@@ -4,6 +4,7 @@
     min-width: 200px;
     margin-right: auto;
     flex-grow: 0;
+    padding-right: 10px;
 }
 
 .nav {
@@ -15,6 +16,7 @@
     cursor: pointer;
     padding: 3px;
     margin-top: 50px;
+    border-bottom: 0.1rem solid dimgrey;
 }
 
 .navItemWrap {
