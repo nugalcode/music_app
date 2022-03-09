@@ -5,18 +5,32 @@
     margin-right: auto;
     flex-grow: 0;
     padding-right: 10px;
+    font-size: 0.8rem;
+    color: #d0d0d0;
 }
 
 .nav {
     display: flex;
-    color: white;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     cursor: pointer;
     padding: 3px;
     margin-top: 50px;
+    font-weight: bold;
+}
+
+.navBottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
+    padding: 3px;
+    margin-top: 15px;
     border-bottom: 0.1rem solid dimgrey;
+    font-weight: bold;
+    padding-bottom: 10px;
 }
 
 .navItemWrap {
@@ -32,3 +46,17 @@
     .navItemWrap:hover {
         background-color: var(--myGray);
     }
+
+.playlists {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    color: white;
+    margin-top: 15px;
+    height: 40%;
+}
+
+.playlist {
+    padding: 5px;
+}
+
