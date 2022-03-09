@@ -22,13 +22,16 @@
     display: flex;
     flex-direction: column;
     padding: 10px 10px 10px 20px;
-    width: 33%;
+    min-width: 33%;
 }
 
     .titleAndArtistWrap div {
         
     }
 
+.titleContent {
+    
+}
 .greenTitle {
     color: var(--myGreen);
 }
@@ -60,13 +63,14 @@
     display: flex;
     min-width: 20%;
     padding: 5px;
+    flex-shrink: 1;
 }
 
 .trackDuration {
     display: flex;
     margin-left: auto;
     padding-right: 5px;
-    min-width: 20%;
+    min-width: 20%; 
     justify-content: center;
     flex-shrink: 0;
 }
@@ -84,7 +88,7 @@
 }
 
 .TrackHeader .titleAndArtistWrap {
-    width: 40%;
+    width: 39%;
 }
 
 

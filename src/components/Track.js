@@ -36,29 +36,36 @@ const Track = ({ track, number, chooseTrack }) => {
     })
 
     return (
+
         <div className="track"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={() => handlePlay()}
             ref={ref}
         >
+
             <div className="playAndNumberWrap">
                 { hover ?
                     <PlayArrowIcon className="trackPlayArrowIcon" />
                     : <div className="songNumber"> {number} </div>
                 }
             </div>
+
             <img src={track.albumUrl} alt="track_pic" />
+
             <div className="titleAndArtistWrap">
-                <div className={isCurrent ? "greenTitle" : ""}> {track.title} </div>
-                <div> {track.artist} </div>
+                <span className={isCurrent ? "titleContent greenTitle" : "titleContent"}> {track.title} </span>
+                <span className="titleContent"> {track.artist} </span>
             </div>
 
             <div className="albumName">
                 {track.albumName}
             </div>
 
-            <div className="trackDuration"> {track.duration} </div>
+            <div className="trackDuration">
+                {track.duration}
+            </div>
+
         </div>
     )
 
