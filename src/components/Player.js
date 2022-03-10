@@ -9,7 +9,6 @@ export default function Player({ accessToken, currentTrack, uris }) {
         if (!currentTrack) return
 
         
-        console.log(currentTrack.artist);
         const handleFunc = () => {
             setOffset(currentTrack.offset)
         }

@@ -58,5 +58,10 @@
 
 .playlist {
     padding: 5px;
+    cursor: default;
 }
+
+    .playlist:hover {
+        color: white;
+    }
 

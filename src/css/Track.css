@@ -20,9 +20,8 @@
 .titleAndArtistWrap {
     display: flex;
     flex-direction: column;
-    padding: 10px 10px 10px 20px;
+    padding: 3px 10px 3px 20px;
     width: 10%;
-    white-space: nowrap;
 }
 
     .titleAndArtistWrap div {
@@ -31,16 +30,18 @@
 
 .title {
     color: white;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .artist {
     font-size: 0.85rem;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.greenTitle {
+.title.greenTitle {
     color: var(--myGreen);
 }
 

@@ -28,27 +28,20 @@ const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
-    
+    const [userPlaylists, setUserPlaylists] = useState([]);
+
     function chooseTrack(track) {
         setPlayingTrack(track);
     }
 
     useEffect(() => {
         if (!playingTrack) return
-        // if the song we're playing is in a different list of songs
         const handleFunc = () => {
-            const check = (element) => {
-                return element === playingTrack.uri
-            };
-
-          //  if (!currentUris.length || !currentUris.some(check)) {
-                console.log("uris is changing")
                 setCurrentUris(
                     searchResults.map((track) => {
                         return track.uri
                     })
                 )
-            //}
         }
         handleFunc();
     }, [playingTrack, searchResults])
@@ -69,7 +62,6 @@ const Dashboard = ({ code }) => {
             if (cancel) return
             setSearchResults(
                 res.body.tracks.items.map((track, index) => {
-                    console.log(track);
                     // find the smallest album image
                     const smallestAlbumImage = track.album.images.reduce(
                         (smallest, image) => {
@@ -98,6 +90,26 @@ const Dashboard = ({ code }) => {
         return () => cancel = true;
     }, [searchTerm, accessToken]);
 
+    useEffect(() => {
+        if (!accessToken) return;
+
+        spotifyApi.getUserPlaylists("22zgpa3c4rhfprseqpfjastoi").then(res => {
+                setUserPlaylists(res.body.items.map((playlist, index) => {
+                    return {
+                        name: playlist.name,
+                        playlistID: playlist.id,
+                        ownerID: playlist.owner.id,
+                    };
+                })
+            )
+           // console.log(res.body.items.owner.id);
+        })
+        /*spotifyApi.getMe().then(res => {
+            console.log(res.body);
+        })*/
+    }, [accessToken])
+
+
     const handleOnChange = (e) => {
         setSearchTerm(e.target.value);
     }
@@ -115,7 +127,7 @@ const Dashboard = ({ code }) => {
     return (
         <div className="dashboard">
 
-            <LeftSideBar />
+            <LeftSideBar playlists={userPlaylists} />
 
             <div className="dashboardCenter">
 

@@ -1,33 +1,17 @@
 import React from 'react';
 
-const Playlists = () => {
+const Playlists = ( {playlists} ) => {
     return (
         <div className="playlists">
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
-            <div className="playlist"> Playlist filler </div>
+            {
+                playlists.map((playlist) => {
+                    return (
+                        <div className="playlist">
+                            {playlist.name}
+                        </div>
+                    )
+                })
+            }
         </div>
     );
 }
