@@ -11,13 +11,8 @@ const Track = ({ track, number, chooseTrack }) => {
     const [hover, setHover] = useState(false);
     const ref = useRef();
 
-    /*const handleClick = () => {
-        setPlaying(true);
-    }*/
-
     const handlePlay = () => {
         chooseTrack(track);
-        //handleClick();
     }
 
     useEffect(() => {
@@ -40,13 +35,12 @@ const Track = ({ track, number, chooseTrack }) => {
         <div className="track"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={() => handlePlay()}
             ref={ref}
         >
 
             <div className="playAndNumberWrap">
                 { hover ?
-                    <PlayArrowIcon className="trackPlayArrowIcon" />
+                    <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()}/>
                     : <div className="songNumber"> {number} </div>
                 }
             </div>
@@ -54,7 +48,7 @@ const Track = ({ track, number, chooseTrack }) => {
             <img src={track.albumUrl} alt="track_pic" />
 
             <div className="titleAndArtistWrap">
-                <span className={isCurrent ? "title greenTitle" : "title"}> {track.title} </span>
+                <span className={isCurrent ? "title greenTitle" : "title"} title={track.title}> {track.title} </span>
                 <span className="artist"> {track.artist} </span>
             </div>
 
