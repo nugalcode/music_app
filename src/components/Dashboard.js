@@ -29,6 +29,7 @@ const Dashboard = ({ code }) => {
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
     const [userPlaylists, setUserPlaylists] = useState([]);
+    const [userID, setUserID] = useState("");
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -93,7 +94,16 @@ const Dashboard = ({ code }) => {
     useEffect(() => {
         if (!accessToken) return;
 
-        spotifyApi.getUserPlaylists("22zgpa3c4rhfprseqpfjastoi").then(res => {
+        spotifyApi.getMe().then(res => {
+            setUserID(res.body.id)
+        })
+
+    }, [accessToken])
+
+    useEffect(() => {
+        if (!accessToken || !userID) return;
+
+        spotifyApi.getUserPlaylists(userID).then(res => {
                 setUserPlaylists(res.body.items.map((playlist, index) => {
                     return {
                         name: playlist.name,
@@ -102,12 +112,9 @@ const Dashboard = ({ code }) => {
                     };
                 })
             )
-           // console.log(res.body.items.owner.id);
         })
-        /*spotifyApi.getMe().then(res => {
-            console.log(res.body);
-        })*/
-    }, [accessToken])
+        
+    }, [accessToken, userID])
 
 
     const handleOnChange = (e) => {

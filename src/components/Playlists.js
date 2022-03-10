@@ -6,7 +6,7 @@ const Playlists = ( {playlists} ) => {
             {
                 playlists.map((playlist) => {
                     return (
-                        <div className="playlist">
+                        <div className="playlist" key={playlist.playlistID}>
                             {playlist.name}
                         </div>
                     )
