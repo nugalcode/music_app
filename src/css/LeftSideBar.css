@@ -1,6 +1,7 @@
 .LeftSideBar {
     display: flex;
     flex-direction: column;
+    width: 200px;
     min-width: 200px;
     margin-right: auto;
     flex-grow: 0;

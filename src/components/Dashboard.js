@@ -5,6 +5,7 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import Track from './Track.js';
 import Player from './Player.js';
 import LeftSideBar from './LeftSideBar.js';
+import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 
 const spotifyApi = new SpotifyWebApi({
@@ -144,6 +145,9 @@ const Dashboard = ({ code }) => {
                 </div>
 
             </div>
+
+            <RightSideBar />
+
             <div className="playerWrap">
                 <Player accessToken={accessToken} currentTrack={playingTrack} uris={currentUris}/>
             </div>

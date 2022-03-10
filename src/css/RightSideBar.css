@@ -1,0 +1,86 @@
+.RightSideBar {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    min-width: 200px;
+    margin-left: auto;
+    flex-grow: 0;
+    padding-left: 10px;
+    font-size: 0.8rem;
+    color: var(--myGrayFontColor);
+}
+
+.friendActivity {
+    display: flex;
+    flex-direction: column;
+    
+    padding: 3px;
+    margin-top: 50px;
+    
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
+    font-weight: bold;
+    color: var(--myGrayFontColor);
+}
+
+.addFriendButton {
+    padding: 2px;
+    border-radius: 40px;
+}
+
+    .addFriendButton:hover {
+        background-color: var(--myGray);
+        color: white;
+    }
+
+.friendsAndFollowers {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25rem;
+    padding: 20px 5px 5px 5px;
+}
+
+.people {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 5px 5px 0px;
+}
+
+.personIcon {
+    padding: 10px;
+    background-color: var(--myGray);
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.description {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.settings {
+    display: flex;
+    line-height: 1.25rem;
+    padding: 20px 5px 5px 5px;
+    flex-direction: column;
+}
+
+.settingsButton {
+    display: flex;
+    background-color: white;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    margin: 20px 10px 10px 10px;
+    padding: 20px;
+    height: 0.8rem;
+    letter-spacing: 0.15rem;
+    font-weight: bold;
+}
+
