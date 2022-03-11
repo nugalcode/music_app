@@ -41,7 +41,10 @@ const Dashboard = ({ code }) => {
     }
 
     useEffect(() => {
-        if (!currentPlaylist || !accessToken) return;
+        // Object.keys is a built-in javascript method to check if an object is empty
+        // I'm doing this because checking if an object is empty (i.e. !object) does not work
+        // as expected like it does with arrays or strings
+        if (!accessToken || !Object.keys(currentPlaylist).length || !currentPlaylist.playlistID) return;
 
         spotifyApi.getPlaylistTracks(currentPlaylist.playlistID).then(res => {
             setSearchResults(
@@ -69,6 +72,8 @@ const Dashboard = ({ code }) => {
                     }
                 })
             )
+        }).catch(() => {
+            console.log("Error trying to get playlist tracks");
         })
     
     }, [currentPlaylist, accessToken])
