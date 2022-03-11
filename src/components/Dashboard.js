@@ -30,10 +30,24 @@ const Dashboard = ({ code }) => {
     const [currentUris, setCurrentUris] = useState([]);
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
+    const [currentPlaylist, setCurrentPlaylist] = useState({});
 
     function chooseTrack(track) {
         setPlayingTrack(track);
     }
+
+    function handlePlaylistTracks(playlist) {
+        setCurrentPlaylist(playlist);
+    }
+
+    useEffect(() => {
+        if (!currentPlaylist || !accessToken) return;
+
+        spotifyApi.getPlaylistTracks(currentPlaylist.playlistID).then(res => {
+            console.log(res.body);
+        })
+    
+    }, [currentPlaylist])
 
     useEffect(() => {
         if (!playingTrack) return
@@ -104,13 +118,14 @@ const Dashboard = ({ code }) => {
         if (!accessToken || !userID) return;
 
         spotifyApi.getUserPlaylists(userID).then(res => {
-                setUserPlaylists(res.body.items.map((playlist, index) => {
-                    return {
-                        name: playlist.name,
-                        playlistID: playlist.id,
-                        ownerID: playlist.owner.id,
-                    };
-                })
+           // console.log(res.body.items);
+            setUserPlaylists(res.body.items.map((playlist, index) => {
+                return {
+                    name: playlist.name,
+                    playlistID: playlist.id,
+                    ownerID: playlist.owner.id,
+                };
+            })
             )
         })
         
@@ -134,7 +149,7 @@ const Dashboard = ({ code }) => {
     return (
         <div className="dashboard">
 
-            <LeftSideBar playlists={userPlaylists} />
+            <LeftSideBar playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 
             <div className="dashboardCenter">
 
