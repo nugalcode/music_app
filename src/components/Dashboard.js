@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -12,7 +12,7 @@ const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
 })
 
-function convertDuration(ms) {
+export function convertDuration(ms) {
     var minutes = Math.floor(ms/ 60000);
     var seconds = ((ms % 60000) / 1000).toFixed(0);
     return (
@@ -21,8 +21,10 @@ function convertDuration(ms) {
             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
     );
 }
+export const ContextApi = React.createContext(spotifyApi);
 
-const Dashboard = ({ code }) => {
+export const Dashboard = ({ code }) => {
+
     const accessToken = useAuth(code);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -31,6 +33,7 @@ const Dashboard = ({ code }) => {
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
+   // const [likedSongs, setLikedSongs] = useState([]);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -40,6 +43,50 @@ const Dashboard = ({ code }) => {
         setCurrentPlaylist(playlist);
     }
 
+    function displayLikedSongs(songs) {
+        setSearchResults(songs);
+    }
+
+    // Get Saved Tracks
+   /* useEffect(() => {
+
+        if (!accessToken || !userID) return;
+
+        spotifyApi.getMySavedTracks()
+            .then(res => {
+                setLikedSongs(
+                    res.body.items.map((item, index) => {
+                        const track = item.track;
+                        // find the smallest album image
+                        const smallestAlbumImage = track.album.images.reduce(
+                            (smallest, image) => {
+                                if (image.height < smallest.height) return image
+                                return smallest;
+                            },
+                            track.album.images[0]
+                        )
+
+                        const duration = convertDuration(track.duration_ms);
+
+                        return {
+                            artist: track.artists[0].name,
+                            title: track.name,
+                            uri: track.uri,
+                            albumName: track.album.name,
+                            albumUrl: smallestAlbumImage.url,
+                            duration: duration,
+                            offset: index,
+                        }
+                    })
+                )
+            }).catch(() => {
+                console.log("Error getting user's saved tracks.")
+            })
+
+
+    }, [accessToken, userID])*/
+
+    // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
         // Object.keys is a built-in javascript method to check if an object is empty
         // I'm doing this because checking if an object is empty (i.e. !object) does not work
@@ -78,6 +125,7 @@ const Dashboard = ({ code }) => {
     
     }, [currentPlaylist, accessToken])
 
+    // setCurrentUris
     useEffect(() => {
         if (!playingTrack) return
         const handleFunc = () => {
@@ -89,12 +137,14 @@ const Dashboard = ({ code }) => {
         }
         handleFunc();
     }, [playingTrack, searchResults])
-    
+
+    // setting spotify api access token 
     useEffect(() => {
         if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
     }, [accessToken])
 
+    // setting search results according to the search term
     useEffect(() => {
         if (!searchTerm) return setSearchResults([]);
         if (!accessToken) return;
@@ -133,6 +183,7 @@ const Dashboard = ({ code }) => {
         return () => cancel = true;
     }, [searchTerm, accessToken]);
 
+    // getting the information of the user and setting userID accordingly
     useEffect(() => {
         if (!accessToken) return;
 
@@ -142,6 +193,7 @@ const Dashboard = ({ code }) => {
 
     }, [accessToken])
 
+    // getting the user's playlists
     useEffect(() => {
         if (!accessToken || !userID) return;
 
@@ -159,7 +211,7 @@ const Dashboard = ({ code }) => {
         
     }, [accessToken, userID])
 
-
+    // handle search term on change and on enter
     const handleOnChange = (e) => {
         setSearchTerm(e.target.value);
     }
@@ -173,48 +225,51 @@ const Dashboard = ({ code }) => {
            
         }
 
-    } 
+    }
+
     return (
-        <div className="dashboard">
+        <ContextApi.Provider value={spotifyApi}>
+            <div className="dashboard">
 
-            <LeftSideBar playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
+                <LeftSideBar displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 
-            <div className="dashboardCenter">
+                <div className="dashboardCenter">
 
-                <form className="searchForm" onSubmit={handleOnSubmit}>
-                    <input
-                        type="search"
-                        className="searchBar"
-                        placeholder="Search Song or Artist"
-                        value={searchTerm}
-                        onChange={handleOnChange}
-                    />
-                </form>
+                    <form className="searchForm" onSubmit={handleOnSubmit}>
+                        <input
+                            type="search"
+                            className="searchBar"
+                            placeholder="Search Song or Artist"
+                            value={searchTerm}
+                            onChange={handleOnChange}
+                        />
+                    </form>
 
-                <div className="songsContainer">
-                    <TrackHeader />
-                    {searchResults.map((track, index) => {
-                        return (
-                            <Track
-                                key={index}
-                                track={track}
-                                number={index + 1}
-                                chooseTrack={chooseTrack}
-                            />
-                        )
-                    }
-                    )}
+                    <div className="songsContainer">
+                        <TrackHeader />
+                        {searchResults.map((track, index) => {
+                            return (
+                                <Track
+                                    key={index}
+                                    track={track}
+                                    number={index + 1}
+                                    chooseTrack={chooseTrack}
+                                />
+                            )
+                        }
+                        )}
+                    </div>
+
                 </div>
 
-            </div>
+                <RightSideBar />
 
-            <RightSideBar />
+                <div className="playerWrap">
+                    <Player accessToken={accessToken} currentTrack={playingTrack} uris={currentUris}/>
+                </div>
 
-            <div className="playerWrap">
-                <Player accessToken={accessToken} currentTrack={playingTrack} uris={currentUris}/>
-            </div>
-
-        </div>
+                </div>
+        </ContextApi.Provider>
     )
 }
 

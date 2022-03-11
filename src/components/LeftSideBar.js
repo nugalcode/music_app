@@ -4,11 +4,12 @@ import Nav from './Nav';
 import Playlists from './Playlists';
 import NavBottom from './NavBottom';
 
-const LeftSideBar = ({ playlists, handlePlaylistTracks} ) => {
+const LeftSideBar = ({ playlists, handlePlaylistTracks, displayLikedSongs }) => {
+
     return (
         <div className="LeftSideBar">
             <Nav />
-            <NavBottom />
+            <NavBottom displayLikedSongs={displayLikedSongs} />
             <Playlists playlists={playlists} handlePlaylistTracks={handlePlaylistTracks}/>
         </div>
     )
