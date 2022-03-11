@@ -44,10 +44,34 @@ const Dashboard = ({ code }) => {
         if (!currentPlaylist || !accessToken) return;
 
         spotifyApi.getPlaylistTracks(currentPlaylist.playlistID).then(res => {
-            console.log(res.body);
+            setSearchResults(
+                res.body.items.map((item, index) => {
+                    const track = item.track;
+                    // find the smallest album image
+                    const smallestAlbumImage = track.album.images.reduce(
+                        (smallest, image) => {
+                            if (image.height < smallest.height) return image
+                            return smallest;
+                        },
+                        track.album.images[0]
+                    )
+
+                    const duration = convertDuration(track.duration_ms);
+
+                    return {
+                        artist: track.artists[0].name,
+                        title: track.name,
+                        uri: track.uri,
+                        albumName: track.album.name,
+                        albumUrl: smallestAlbumImage.url,
+                        duration: duration,
+                        offset: index,
+                    }
+                })
+            )
         })
     
-    }, [currentPlaylist])
+    }, [currentPlaylist, accessToken])
 
     useEffect(() => {
         if (!playingTrack) return
@@ -73,7 +97,6 @@ const Dashboard = ({ code }) => {
 
         spotifyApi.searchTracks(searchTerm).then(res => {
             // if a new request comes in before a request finishes, then cancel previous one
-            
             if (cancel) return
             setSearchResults(
                 res.body.tracks.items.map((track, index) => {
@@ -109,7 +132,7 @@ const Dashboard = ({ code }) => {
         if (!accessToken) return;
 
         spotifyApi.getMe().then(res => {
-            setUserID(res.body.id)
+            setUserID(res.body.id);
         })
 
     }, [accessToken])
@@ -168,7 +191,7 @@ const Dashboard = ({ code }) => {
                     {searchResults.map((track, index) => {
                         return (
                             <Track
-                                key={track.uri}
+                                key={index}
                                 track={track}
                                 number={index + 1}
                                 chooseTrack={chooseTrack}
