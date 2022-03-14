@@ -1,7 +1,17 @@
 .contextMenu {
     display: flex;
-    border: 3px solid white;
-    background-color: black;
-    color: aqua;
+    flex-direction: column;
+    border: 3px solid transparent;
+    background-color: var(--myGray);
+    color: white;
     cursor: default;
+    font-size: 0.8rem;
 }
+
+.contextMenuItem {
+    padding: 5px;
+}
+
+    .contextMenuItem:hover {
+        background-color: rgb(52, 52, 52)
+    }

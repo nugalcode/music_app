@@ -9,7 +9,9 @@ const ContextMenu = ({ position }) => {
 	}
 	return (
 		<div className="contextMenu" style={style}>
-			Display text
+			<div className="contextMenuItem"> Option 1 </div>
+			<div className="contextMenuItem"> Option 2</div>
+			<div className="contextMenuItem"> Option 3</div>
 		</div>
 	)
 }
