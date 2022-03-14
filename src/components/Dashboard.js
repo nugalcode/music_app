@@ -7,6 +7,7 @@ import Player from './Player.js';
 import LeftSideBar from './LeftSideBar.js';
 import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
+import ContextMenu from './ContextMenu.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -193,9 +194,33 @@ export const Dashboard = ({ code }) => {
 
     }
 
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({});
+    useEffect(() => {
+        const handleOnClick = (e) => {
+            e.preventDefault();
+            setMenuIsOpen(true);
+            const position = { x: e.x, y: e.y };
+            setMenuPosition(position);
+        }
+        document.addEventListener('contextmenu', handleOnClick);
+        return () => document.removeEventListener('contextmenu', handleOnClick);
+    }, [setMenuPosition])
+
+    useEffect(() => {
+        const handleOnClick = (e) => {
+            if (menuIsOpen)
+                setMenuIsOpen(false);
+        }
+        document.addEventListener('mousedown', handleOnClick);
+        return () => document.removeEventListener('mousedown', handleOnClick);
+    }, [menuIsOpen])
+
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
+
+                {menuIsOpen && <ContextMenu position={menuPosition} />}
 
                 <LeftSideBar addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 

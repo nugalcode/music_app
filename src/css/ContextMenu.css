@@ -1,0 +1,7 @@
+.contextMenu {
+    display: flex;
+    border: 3px solid white;
+    background-color: black;
+    color: aqua;
+    cursor: default;
+}
