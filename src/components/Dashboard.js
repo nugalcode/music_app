@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -33,7 +33,7 @@ export const Dashboard = ({ code }) => {
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
-   // const [likedSongs, setLikedSongs] = useState([]);
+    const [likedSongs, setLikedSongs] = useState([]);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -43,48 +43,15 @@ export const Dashboard = ({ code }) => {
         setCurrentPlaylist(playlist);
     }
 
-    function displayLikedSongs(songs) {
+    const displayLikedSongs= useCallback((songs) => {
         setSearchResults(songs);
-    }
+    }, [setSearchResults])
+    
 
-    // Get Saved Tracks
-   /* useEffect(() => {
-
-        if (!accessToken || !userID) return;
-
-        spotifyApi.getMySavedTracks()
-            .then(res => {
-                setLikedSongs(
-                    res.body.items.map((item, index) => {
-                        const track = item.track;
-                        // find the smallest album image
-                        const smallestAlbumImage = track.album.images.reduce(
-                            (smallest, image) => {
-                                if (image.height < smallest.height) return image
-                                return smallest;
-                            },
-                            track.album.images[0]
-                        )
-
-                        const duration = convertDuration(track.duration_ms);
-
-                        return {
-                            artist: track.artists[0].name,
-                            title: track.name,
-                            uri: track.uri,
-                            albumName: track.album.name,
-                            albumUrl: smallestAlbumImage.url,
-                            duration: duration,
-                            offset: index,
-                        }
-                    })
-                )
-            }).catch(() => {
-                console.log("Error getting user's saved tracks.")
-            })
-
-
-    }, [accessToken, userID])*/
+    /*useEffect(() => {
+        if (!likedSongs.length) return
+        setSearchResults(likedSongs);
+    }, [likedSongs]) */
 
     // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
