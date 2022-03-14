@@ -3,11 +3,11 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ContextApi, convertDuration } from './Dashboard'
 
-const NavBottom = ({ displayLikedSongs }) => {
+const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
 
     const spotifyApi = useContext(ContextApi);
     const [likedSongs, setLikedSongs] = useState([]);
-
+ //   const [newPlaylist, setNewPlaylist] = useState({});
     // get the user's liked songs
     const getLikedSongs = () => {
 
@@ -15,7 +15,6 @@ const NavBottom = ({ displayLikedSongs }) => {
 
         spotifyApi.getMySavedTracks()
         .then(res => {
-            console.log(res.body.items);
             setLikedSongs(
                 res.body.items.map((item, index) => {
                     const track = item.track;
@@ -52,16 +51,34 @@ const NavBottom = ({ displayLikedSongs }) => {
         displayLikedSongs(likedSongs)
     }, [displayLikedSongs, likedSongs])
 
+    // call createPLaylist API 
     const createPlaylist = () => {
         if (!spotifyApi) return
 
         spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
             .then(function (data) {
                 console.log('Created playlist!');
+                const playlist = data.body;
+                addNewPlaylist({
+                    name: playlist.name,
+                    playlistID: playlist.id,
+                    ownerID: playlist.owner.id,
+                });
+                /*setNewPlaylist(
+                    {
+                        name: playlist.name,
+                        playlistID: playlist.id,
+                        ownerID: playlist.owner.id,
+                    });*/
             }, function (err) {
-                console.log('Something went wrong!', err);
+                console.log('Error trying to create playlist!', err);
             });
     }
+
+   /* useEffect(() => {
+        if (!Object.keys(newPlaylist).length) return;
+        addNewPlaylist(newPlaylist);
+    }, [addNewPlaylist, newPlaylist])*/
 
     return (
         <div className="navBottom">

@@ -42,10 +42,16 @@ export const Dashboard = ({ code }) => {
         setCurrentPlaylist(playlist);
     }
 
-    const displayLikedSongs= useCallback((songs) => {
+    const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
     }, [setSearchResults])
-    
+
+    const addNewPlaylist = useCallback((newPlaylist) => {
+        const currentPlaylists = userPlaylists;
+        var newPlaylists = [newPlaylist].concat(currentPlaylists);
+        setUserPlaylists(newPlaylists);
+    }, [setUserPlaylists, userPlaylists]);
+
     // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
         // Object.keys is a built-in javascript method to check if an object is empty
@@ -191,7 +197,7 @@ export const Dashboard = ({ code }) => {
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
-                <LeftSideBar displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
+                <LeftSideBar addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 
                 <div className="dashboardCenter">
 
