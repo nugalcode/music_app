@@ -7,7 +7,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
 
     const spotifyApi = useContext(ContextApi);
     const [likedSongs, setLikedSongs] = useState([]);
- //   const [newPlaylist, setNewPlaylist] = useState({});
+
     // get the user's liked songs
     const getLikedSongs = () => {
 
@@ -51,7 +51,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
         displayLikedSongs(likedSongs)
     }, [displayLikedSongs, likedSongs])
 
-    // call createPLaylist API 
+    // add a new playlist 
     const createPlaylist = () => {
         if (!spotifyApi) return
 
@@ -64,21 +64,10 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
                     playlistID: playlist.id,
                     ownerID: playlist.owner.id,
                 });
-                /*setNewPlaylist(
-                    {
-                        name: playlist.name,
-                        playlistID: playlist.id,
-                        ownerID: playlist.owner.id,
-                    });*/
             }, function (err) {
                 console.log('Error trying to create playlist!', err);
             });
     }
-
-   /* useEffect(() => {
-        if (!Object.keys(newPlaylist).length) return;
-        addNewPlaylist(newPlaylist);
-    }, [addNewPlaylist, newPlaylist])*/
 
     return (
         <div className="navBottom">
