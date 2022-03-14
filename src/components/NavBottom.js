@@ -52,10 +52,21 @@ const NavBottom = ({ displayLikedSongs }) => {
         displayLikedSongs(likedSongs)
     }, [displayLikedSongs, likedSongs])
 
+    const createPlaylist = () => {
+        if (!spotifyApi) return
+
+        spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
+            .then(function (data) {
+                console.log('Created playlist!');
+            }, function (err) {
+                console.log('Something went wrong!', err);
+            });
+    }
+
     return (
         <div className="navBottom">
 
-            <div className="navItemWrap">
+            <div className="navItemWrap" onClick={() => createPlaylist()}>
                 <AddBoxIcon className="navIcon" />
                 <div>  Create Playlist  </div>
             </div>
