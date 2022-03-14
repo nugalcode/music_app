@@ -33,7 +33,6 @@ export const Dashboard = ({ code }) => {
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
-    const [likedSongs, setLikedSongs] = useState([]);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -47,12 +46,6 @@ export const Dashboard = ({ code }) => {
         setSearchResults(songs);
     }, [setSearchResults])
     
-
-    /*useEffect(() => {
-        if (!likedSongs.length) return
-        setSearchResults(likedSongs);
-    }, [likedSongs]) */
-
     // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
         // Object.keys is a built-in javascript method to check if an object is empty

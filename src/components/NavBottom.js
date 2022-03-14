@@ -8,7 +8,8 @@ const NavBottom = ({ displayLikedSongs }) => {
     const spotifyApi = useContext(ContextApi);
     const [likedSongs, setLikedSongs] = useState([]);
 
-    const handleClick = () => {
+    // get the user's liked songs
+    const getLikedSongs = () => {
 
         if (!spotifyApi) return;
 
@@ -45,7 +46,7 @@ const NavBottom = ({ displayLikedSongs }) => {
             return
         })
     }
-
+    // triggers when user's liked songs is fetched. calls the props function
     useEffect(() => {
         if (!likedSongs.length) return
         displayLikedSongs(likedSongs)
@@ -59,7 +60,7 @@ const NavBottom = ({ displayLikedSongs }) => {
                 <div>  Create Playlist  </div>
             </div>
 
-            <div className="navItemWrap" onClick={() => handleClick()}>
+            <div className="navItemWrap" onClick={() => getLikedSongs()}>
                 <FavoriteIcon className="navIcon" />
                 <div>  Liked Songs  </div>
             </div>
