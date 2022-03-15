@@ -16,7 +16,7 @@ const TrackHeader = () => {
                 album
             </div>
 
-            <div className="trackDuration">
+            <div className="rightSideTrackWrapper">
                 <AccessTimeIcon />
             </div>
         </div>

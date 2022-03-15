@@ -1,14 +1,41 @@
 import { useState, useRef, useEffect } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 /**
  *  @track is passed down from Dashboard
  *   containing artist, title, uri, albumUrl
  */
-const Track = ({ track, number, chooseTrack }) => {
+
+const isLikedSong = (track, likedSongs) => {
+    if (!likedSongs.length) return false;
+    for (let i = 0; i < likedSongs.length; i++) {
+        var song = likedSongs[i];
+        if (song.uri === track.uri) {
+            return true
+        }
+    }
+    return false;
+}
+
+const Track = ({ track, number, chooseTrack, likedSongs }) => {
 
     const [isCurrent, setIsCurrent] = useState(false);
     const [hover, setHover] = useState(false);
+    const [isLiked, setIsLiked] = useState(() => {
+        isLikedSong(track, likedSongs);
+    })
+
+    useEffect(() => {
+        const handleFunction = () => {
+            var temp = isLikedSong(track, likedSongs);
+            setIsLiked(temp);
+        }
+        handleFunction();
+    }, [track, likedSongs])
     const ref = useRef();
 
     const handlePlay = () => {
@@ -56,8 +83,10 @@ const Track = ({ track, number, chooseTrack }) => {
                 {track.albumName}
             </div>
 
-            <div className="trackDuration">
-                {track.duration}
+            <div className="rightSideTrackWrapper">
+                {isLiked ? <FavoriteIcon className="rightSideIcon open likedSong" /> : <FavoriteBorderIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} />}
+                <span className="trackDuration"> {track.duration} </span>
+                <MoreHorizIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} />
             </div>
 
         </div>

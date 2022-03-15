@@ -34,6 +34,7 @@ export const Dashboard = ({ code }) => {
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
+    const [likedSongs, setLikedSongs] = useState([]);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -45,7 +46,8 @@ export const Dashboard = ({ code }) => {
 
     const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
-    }, [setSearchResults])
+        setLikedSongs(songs);
+    }, [setSearchResults, setLikedSongs])
 
     const addNewPlaylist = useCallback((newPlaylist) => {
         const currentPlaylists = userPlaylists;
@@ -220,7 +222,7 @@ export const Dashboard = ({ code }) => {
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
-                {menuIsOpen && <ContextMenu position={menuPosition} />}
+                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists}/>}
 
                 <LeftSideBar addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 
@@ -245,6 +247,7 @@ export const Dashboard = ({ code }) => {
                                     track={track}
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
+                                    likedSongs={likedSongs}
                                 />
                             )
                         }
