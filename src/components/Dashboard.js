@@ -85,6 +85,7 @@ export const Dashboard = ({ code }) => {
                         albumUrl: smallestAlbumImage.url,
                         duration: duration,
                         offset: index,
+                        id: track.id,
                     }
                 })
             )
@@ -143,6 +144,7 @@ export const Dashboard = ({ code }) => {
                         albumUrl: smallestAlbumImage.url,
                         duration: duration,
                         offset: index,
+                        id: track.id,
                     }
                 })
             )

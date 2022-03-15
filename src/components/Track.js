@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { ContextApi } from './Dashboard'
 
 /**
  *  @track is passed down from Dashboard
@@ -28,7 +29,33 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
     const [isLiked, setIsLiked] = useState(() => {
         isLikedSong(track, likedSongs);
     })
+    const spotifyApi = useContext(ContextApi);
 
+    // if user likes / unlikes a track
+    const handleLikeChange = () => {
+        if (!spotifyApi || !track || !track.id) return
+        const liked = isLiked;
+        if (liked) {
+            setIsLiked(false);
+            spotifyApi.removeFromMySavedTracks([track.id])
+                .then(res => {
+                    console.log("Song successfully removed from liked songs!")
+                }).catch((err) => {
+                    console.log("Error trying to remove song from liked songs!")
+                })
+        }
+        else {
+            setIsLiked(true);
+            spotifyApi.addToMySavedTracks([track.id])
+                .then(res => {
+                    console.log("Song successfully added to liked songs!")
+                }).catch((err) => {
+                    console.log("Error trying to add song to liked songs!")
+                })
+        }
+    }
+
+    // Checks if the track is in the user's Liked Songs
     useEffect(() => {
         const handleFunction = () => {
             var temp = isLikedSong(track, likedSongs);
@@ -36,6 +63,7 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
         }
         handleFunction();
     }, [track, likedSongs])
+
     const ref = useRef();
 
     const handlePlay = () => {
@@ -84,7 +112,11 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
             </div>
 
             <div className="rightSideTrackWrapper">
-                {isLiked ? <FavoriteIcon className="rightSideIcon open likedSong" /> : <FavoriteBorderIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} />}
+                {isLiked ?
+                    <FavoriteIcon className="rightSideIcon open likedSong" onClick={() => handleLikeChange()}/>
+                    :
+                    <FavoriteBorderIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} onClick={() => handleLikeChange()}/>
+                }
                 <span className="trackDuration"> {track.duration} </span>
                 <MoreHorizIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} />
             </div>

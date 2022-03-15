@@ -37,6 +37,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
                         albumUrl: smallestAlbumImage.url,
                         duration: duration,
                         offset: index,
+                        id: track.id,
                     }
                 })
             )
