@@ -258,6 +258,12 @@ export const Dashboard = ({ code }) => {
         return () => document.removeEventListener('mousedown', handleOnClick);
     }, [menuIsOpen])
 
+    const handleSetMenuIsOpen = (position) => {
+        setMenuIsOpen(!menuIsOpen);
+        setMenuPosition(position);
+        console.log(position);
+    }
+
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
@@ -288,6 +294,7 @@ export const Dashboard = ({ code }) => {
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
                                     likedSongs={isLiked}
+                                    handleSetMenuIsOpen={handleSetMenuIsOpen}
                                 />
                             )
                         }

@@ -21,7 +21,7 @@ const checkIfLiked = (number, likedSongs) => {
     }
 }
 
-const Track = ({ track, number, chooseTrack, likedSongs }) => {
+const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen }) => {
 
     const spotifyApi = useContext(ContextApi);
     const [isCurrent, setIsCurrent] = useState(false);
@@ -91,6 +91,11 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
         return () => document.removeEventListener('mouseup', handleTitle)
     })
 
+    const handleOnClick = (e) => {
+        const position = { x: e.clientX, y: e.clientY };
+        handleSetMenuIsOpen(position);
+    }
+        
     return (
 
         <div className="track"
@@ -124,7 +129,9 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
                     <FavoriteBorderIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} onClick={() => handleLikeChange()}/>
                 }
                 <span className="trackDuration"> {track.duration} </span>
-                <MoreHorizIcon className={hover ? "rightSideIcon open" : "rightSideIcon"} />
+                <MoreHorizIcon className={hover ? "rightSideIcon open" : "rightSideIcon"}
+                    onClick={(e) => handleOnClick(e)}
+                />
             </div>
 
         </div>
