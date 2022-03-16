@@ -75,14 +75,10 @@ export const Dashboard = ({ code }) => {
             else {
                 lastIndex = 49;
             }
-            var temp = [];
-            if (lastIndex === 0) {
-                temp = tracksToCheck;
-            }
-            else {
-                temp = tracksToCheck.slice(0, lastIndex);
-            }
+
+            const temp = lastIndex === 0 ? tracksToCheck : tracksToCheck.slice(0, lastIndex);
             if (!temp.length) return
+
             spotifyApi.containsMySavedTracks(temp)
                 .then((res) => {
                     setIsLiked(res.body.map((result) => {
