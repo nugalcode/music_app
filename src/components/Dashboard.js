@@ -35,6 +35,7 @@ export const Dashboard = ({ code }) => {
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const [likedSongs, setLikedSongs] = useState([]);
+    const [isLiked, setIsLiked] = useState([]);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -55,6 +56,47 @@ export const Dashboard = ({ code }) => {
         setUserPlaylists(newPlaylists);
     }, [setUserPlaylists, userPlaylists]);
 
+    // when searchResults changes, check which tracks are in the liked songs playlist
+    // doing batch check to avoid Error 429: too many api requests
+    useEffect(() => {
+        if (!searchResults.length || !spotifyApi) return
+        const checkIfLiked = () => {
+            const results = searchResults;
+            var tracksToCheck = (results.map((track) => {
+                return track.id
+            })
+            )
+            // Spotify API has limit of 50 track checks per query
+            var lastIndex = -1;
+            const length = tracksToCheck.length;
+            if ((length > 0) && (length < 50)) {
+                lastIndex = length - 1;
+            }
+            else {
+                lastIndex = 49;
+            }
+            var temp = [];
+            if (lastIndex === 0) {
+                temp = tracksToCheck;
+            }
+            else {
+                temp = tracksToCheck.slice(0, lastIndex);
+            }
+            if (!temp.length) return
+            spotifyApi.containsMySavedTracks(temp)
+                .then((res) => {
+                    setIsLiked(res.body.map((result) => {
+                        return result
+                    })
+                    )
+                }).catch((err) => {
+                    console.log("Error checking if tracks are in user's Liked Songs")
+                    console.log(err);
+                })
+        }
+
+        checkIfLiked();
+    }, [searchResults])
     // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
         // Object.keys is a built-in javascript method to check if an object is empty
@@ -249,7 +291,7 @@ export const Dashboard = ({ code }) => {
                                     track={track}
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
-                                    likedSongs={likedSongs}
+                                    likedSongs={isLiked}
                                 />
                             )
                         }

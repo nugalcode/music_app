@@ -13,7 +13,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
 
         if (!spotifyApi) return;
 
-        spotifyApi.getMySavedTracks()
+        spotifyApi.getMySavedTracks({limit: 50})
         .then(res => {
             setLikedSongs(
                 res.body.items.map((item, index) => {

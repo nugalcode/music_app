@@ -11,25 +11,24 @@ import { ContextApi } from './Dashboard'
  *   containing artist, title, uri, albumUrl
  */
 
-const isLikedSong = (track, likedSongs) => {
-    if (!likedSongs.length) return false;
-    for (let i = 0; i < likedSongs.length; i++) {
-        var song = likedSongs[i];
-        if (song.uri === track.uri) {
-            return true
-        }
+const checkIfLiked = (number, likedSongs) => {
+    const trackIndex = number - 1;
+    if (trackIndex >= 0 && trackIndex < likedSongs.length && likedSongs[trackIndex]) {
+        return true;
     }
-    return false;
+    else {
+        return false;
+    }
 }
 
 const Track = ({ track, number, chooseTrack, likedSongs }) => {
 
+    const spotifyApi = useContext(ContextApi);
     const [isCurrent, setIsCurrent] = useState(false);
     const [hover, setHover] = useState(false);
     const [isLiked, setIsLiked] = useState(() => {
-        isLikedSong(track, likedSongs);
+        return checkIfLiked(number, likedSongs)
     })
-    const spotifyApi = useContext(ContextApi);
 
     // if user likes / unlikes a track
     const handleLikeChange = () => {
@@ -57,12 +56,19 @@ const Track = ({ track, number, chooseTrack, likedSongs }) => {
 
     // Checks if the track is in the user's Liked Songs
     useEffect(() => {
+        if (!likedSongs.length || !track || !track.id) return
+
         const handleFunction = () => {
-            var temp = isLikedSong(track, likedSongs);
-            setIsLiked(temp);
+            if (checkIfLiked(number, likedSongs)) {
+                setIsLiked(true);
+            }
+            else {
+                setIsLiked(false);
+            }
         }
         handleFunction();
-    }, [track, likedSongs])
+
+    }, [track, likedSongs, number])
 
     const ref = useRef();
 
