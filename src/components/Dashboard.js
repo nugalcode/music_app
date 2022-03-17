@@ -34,7 +34,6 @@ export const Dashboard = ({ code }) => {
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
-    const [likedSongs, setLikedSongs] = useState([]);
     const [isLiked, setIsLiked] = useState([]);
 
     function chooseTrack(track) {
@@ -47,8 +46,7 @@ export const Dashboard = ({ code }) => {
 
     const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
-        setLikedSongs(songs);
-    }, [setSearchResults, setLikedSongs])
+    }, [setSearchResults])
 
     const addNewPlaylist = useCallback((newPlaylist) => {
         const currentPlaylists = userPlaylists;
@@ -206,7 +204,7 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         if (!accessToken || !userID) return;
 
-        spotifyApi.getUserPlaylists(userID).then(res => {
+        spotifyApi.getUserPlaylists(userID, {limit: 50}).then(res => {
            // console.log(res.body.items);
             setUserPlaylists(res.body.items.map((playlist, index) => {
                 return {
@@ -257,6 +255,8 @@ export const Dashboard = ({ code }) => {
         document.addEventListener('mousedown', handleOnClick);
         return () => document.removeEventListener('mousedown', handleOnClick);
     }, [menuIsOpen])
+
+
 
     const handleSetMenuIsOpen = (position) => {
         setMenuIsOpen(!menuIsOpen);
