@@ -15,7 +15,7 @@ const Playlists = ({ playlists, handlePlaylistTracks }) => {
                             key={playlist.playlistID}
                             onClick={() => handleOnClick(playlist)}
                         >
-                            {playlist.name}
+                            <span> {playlist.name} </span>
                         </div>
                     )
                 })

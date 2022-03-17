@@ -57,9 +57,16 @@
 }
 
 .playlist {
+    display: flex;
     padding: 5px;
     cursor: default;
 }
+
+    .playlist span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
     .playlist:hover {
         color: white;
