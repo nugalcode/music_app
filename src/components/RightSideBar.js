@@ -8,7 +8,7 @@ const RightSideBar = () => {
     return (
         <div className="RightSideBar">
             <div className="friendActivity">
-                    <div className="title">
+                    <div className="rightSideBarTitle">
                         <span> Friend Activity </span>
                         <PersonAddIcon className="addFriendButton" />
                     </div>

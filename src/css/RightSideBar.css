@@ -13,13 +13,11 @@
 .friendActivity {
     display: flex;
     flex-direction: column;
-    
     padding: 3px;
     margin-top: 50px;
-    
 }
 
-.title {
+.rightSideBarTitle {
     display: flex;
     justify-content: space-between;
     align-items: center;
