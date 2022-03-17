@@ -119,7 +119,7 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen }) 
             </div>
 
             <div className="albumName">
-                {track.albumName}
+                <span> {track.albumName} </span>
             </div>
 
             <div className="rightSideTrackWrapper">
