@@ -1,0 +1,38 @@
+.yourLibrary {
+    display: flex;
+    background-color: #0E0E0E;
+    overflow-y: auto;
+    overflow-x: clip;
+    color: var(--myGrayFontColor);
+    height: 100%;
+    width: 100%;
+}
+
+.likedSongsPreview {
+    display: flex;
+    margin: 20px;
+    width: 320px;
+    height: 200px;
+    background-color: #1A1A1B;
+}
+
+.playlistsPreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.playlistPreview {
+    display: flex;
+    margin: 20px;
+    background-color: #1A1A1B;
+    width: 150px;
+    height: 200px;
+}
+
+    .playlistPreview span {
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+

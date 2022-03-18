@@ -29,9 +29,9 @@
     flex-direction: column;
     background-color: var(--myGray);
     overflow-y: auto;
-    height: 90%;
     overflow-x: clip;
     color: var(--myGrayFontColor);
+    padding-bottom: 30px;
 }
 
 .playerWrap {

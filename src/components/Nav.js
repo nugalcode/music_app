@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import React from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
-const Nav = () => {
+const Nav = ({ displayUserLibrary }) => {
+
+    const handleOnClick = () => {
+        displayUserLibrary();
+    }
 
     return (
         <div className="nav">
@@ -20,7 +24,7 @@ const Nav = () => {
 
             <div className="navItemWrap">
                 <LibraryMusicIcon className="navIcon"/>
-                <div> Your Library </div>
+                <div onClick={() => handleOnClick()}> Your Library </div>
             </div>
 
         </div>

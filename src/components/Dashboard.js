@@ -8,6 +8,7 @@ import LeftSideBar from './LeftSideBar.js';
 import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
+import YourLibrary from './YourLibrary.js';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -35,6 +36,8 @@ export const Dashboard = ({ code }) => {
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const [isLiked, setIsLiked] = useState([]);
+    const [showSongs, setShowSongs] = useState(false);
+    const [showLibrary, setShowLibrary] = useState(false);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -54,6 +57,15 @@ export const Dashboard = ({ code }) => {
         setUserPlaylists(newPlaylists);
     }, [setUserPlaylists, userPlaylists]);
 
+    const displayUserLibrary = () => {
+        console.log("setting songs to false and library to true");
+        setShowSongs(false);
+        setShowLibrary(true);
+    }
+    useEffect(() => {
+        setShowSongs(true);
+        setShowLibrary(false);
+    }, [searchResults]);
     // when searchResults changes, check which tracks are in the liked songs playlist
     // doing batch check to avoid Error 429: too many api requests
     useEffect(() => {
@@ -270,7 +282,7 @@ export const Dashboard = ({ code }) => {
 
                 {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists}/>}
 
-                <LeftSideBar addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
+                <LeftSideBar displayUserLibrary={displayUserLibrary}addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
 
                 <div className="dashboardCenter">
 
@@ -284,7 +296,8 @@ export const Dashboard = ({ code }) => {
                         />
                     </form>
 
-                    <div className="songsContainer">
+                    {showLibrary && <YourLibrary playlists={userPlaylists}/>}
+                    { showSongs && <div className="songsContainer">
                         <TrackHeader />
                         {searchResults.map((track, index) => {
                             return (
@@ -299,8 +312,7 @@ export const Dashboard = ({ code }) => {
                             )
                         }
                         )}
-                    </div>
-
+                    </div>}
                 </div>
 
                 <RightSideBar />
