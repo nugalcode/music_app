@@ -8,7 +8,6 @@ export default function Player({ accessToken, currentTrack, uris }) {
     useEffect(() => {
         if (!currentTrack) return
 
-        
         const handleFunc = () => {
             setOffset(currentTrack.offset)
         }

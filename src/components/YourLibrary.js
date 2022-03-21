@@ -1,6 +1,8 @@
 import React from 'react';
 import '../css/YourLibrary.css';
-const YourLibrary = ({ playlists, handlePlaylistTracks }) => {
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+
+const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) => {
 
     const handleOnClick = (playlist) => {
         handlePlaylistTracks(playlist)
@@ -17,7 +19,10 @@ const YourLibrary = ({ playlists, handlePlaylistTracks }) => {
                                 key={index}
                                 onClick={() => handleOnClick(playlist)}
                             >
-                                <img className="playlistImage" src={playlist.image !== "" ? playlist.image : "https://assets.dryicons.com/uploads/icon/svg/8256/d635dcbf-b76c-420b-a334-23eac4052ada.svg"} alt=""/>
+                                <div className="imgWrap"> 
+                                    <img className="playlistImage" src={playlist.image !== "" ? playlist.image : "https://assets.dryicons.com/uploads/icon/svg/8256/d635dcbf-b76c-420b-a334-23eac4052ada.svg"} alt="" />
+                                    <div className="playIconWrap"> <PlayCircleIcon className="playCircleIcon"/> </div>
+                                </div>
                                 <span> {playlist.name} </span>
                             </div>
                         )
