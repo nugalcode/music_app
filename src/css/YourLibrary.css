@@ -1,6 +1,6 @@
 .yourLibrary {
     display: flex;
-    background-color: #0E0E0E;
+    /*background-color: #0E0E0E;*/
     overflow-y: auto;
     overflow-x: clip;
     color: var(--myGrayFontColor);
@@ -10,11 +10,19 @@
 
 .likedSongsPreview {
     display: flex;
-    margin: 20px;
+    margin: 10px;
     width: 320px;
     height: 200px;
     background-color: #1A1A1B;
+    border-radius: 5px;
 }
+
+    .likedSongsPreview span {
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
 .playlistsPreviewContainer {
     display: flex;
@@ -23,10 +31,11 @@
 
 .playlistPreview {
     display: flex;
-    margin: 20px;
+    margin: 10px;
     background-color: #1A1A1B;
     width: 150px;
     height: 200px;
+    border-radius: 5px;
 }
 
     .playlistPreview span {

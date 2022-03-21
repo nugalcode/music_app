@@ -8,7 +8,7 @@
 .App {
     text-align: center;
     font-family: Helvetica, sans-serif;
-    
+    min-width: 800px;
 }
 
 

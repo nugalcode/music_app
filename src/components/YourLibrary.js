@@ -1,14 +1,21 @@
 import React from 'react';
 import '../css/YourLibrary.css';
-const YourLibrary = ({ playlists } ) => {
+const YourLibrary = ({ playlists, handlePlaylistTracks }) => {
+
+    const handleOnClick = (playlist) => {
+        handlePlaylistTracks(playlist)
+    }
     return (
         <div className="yourLibrary">
             <div className="playlistsPreviewContainer">
-                <div className="likedSongsPreview"> LIKED SONGS FILLER FILLER FILLER</div>
+                <div className="likedSongsPreview">
+                    <span> Liked Songs </span>
+                </div>
                 {playlists.map((playlist,index) => {
                         return (
                             <div className="playlistPreview"
                                 key={index}
+                                onClick={() => handleOnClick(playlist)}
                             >
                                 <span> {playlist.name} </span>
                             </div>

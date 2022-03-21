@@ -8,7 +8,7 @@ const LeftSideBar = ({ displayUserLibrary, addNewPlaylist, playlists, handlePlay
 
     return (
         <div className="LeftSideBar">
-            <Nav displayUserLibrary={displayUserLibrary}/>
+            <Nav displayUserLibrary={displayUserLibrary} />
             <NavBottom addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} />
             <Playlists playlists={playlists} handlePlaylistTracks={handlePlaylistTracks}/>
         </div>

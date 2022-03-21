@@ -296,7 +296,7 @@ export const Dashboard = ({ code }) => {
                         />
                     </form>
 
-                    {showLibrary && <YourLibrary playlists={userPlaylists}/>}
+                    {showLibrary && <YourLibrary playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}/>}
                     { showSongs && <div className="songsContainer">
                         <TrackHeader />
                         {searchResults.map((track, index) => {
