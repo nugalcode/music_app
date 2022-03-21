@@ -216,13 +216,28 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         if (!accessToken || !userID) return;
 
-        spotifyApi.getUserPlaylists(userID, {limit: 50}).then(res => {
-           // console.log(res.body.items);
+        spotifyApi.getUserPlaylists(userID, { limit: 50 }).then(res => {
+            console.log(res.body.items);
             setUserPlaylists(res.body.items.map((playlist, index) => {
+                const images = playlist.images;
+               
+                if (!images.length) {
+
+                }
+                const biggestAlbumImage = images.reduce(
+                    (biggest, image) => {
+                        if (image.height > biggest.height) return image
+                        return biggest;
+                    },
+                    images[0]
+                )
+                const imageResult = biggestAlbumImage ? biggestAlbumImage.url : "";
+
                 return {
                     name: playlist.name,
                     playlistID: playlist.id,
                     ownerID: playlist.owner.id,
+                    image: imageResult,
                 };
             })
             )

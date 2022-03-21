@@ -17,6 +17,7 @@ const YourLibrary = ({ playlists, handlePlaylistTracks }) => {
                                 key={index}
                                 onClick={() => handleOnClick(playlist)}
                             >
+                                <img className="playlistImage" src={playlist.image !== "" ? playlist.image : "https://assets.dryicons.com/uploads/icon/svg/8256/d635dcbf-b76c-420b-a334-23eac4052ada.svg"} alt=""/>
                                 <span> {playlist.name} </span>
                             </div>
                         )

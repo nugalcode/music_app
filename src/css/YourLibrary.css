@@ -13,7 +13,7 @@
     margin: 10px;
     width: 320px;
     height: 200px;
-    background-color: #1A1A1B;
+    background-color: #101011;
     border-radius: 5px;
 }
 
@@ -29,19 +29,42 @@
     flex-wrap: wrap;
 }
 
+/* 
+    hex colors from darkest to lightest
+    #070707
+    #101011
+    #1a1a1b
+    #242425
+    #2d2d2f
+*/
 .playlistPreview {
     display: flex;
+    flex-direction: column;
     margin: 10px;
-    background-color: #1A1A1B;
+    background-color: #101011;
     width: 150px;
     height: 200px;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
     .playlistPreview span {
-        padding: 10px;
+        padding: 10px 10px 10px 15px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+       
     }
+
+    .playlistPreview:hover {
+        background-color: #1a1a1b;
+    }
+
+.playlistImage {
+    padding: 10px;
+    width: 120px;
+    height: 120px;
+    align-self: center;
+}
 
