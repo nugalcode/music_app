@@ -245,11 +245,14 @@ export const Dashboard = ({ code }) => {
                 )
                 const imageResult = biggestAlbumImage ? biggestAlbumImage.url : "";
 
+                const libraryCaption = playlist.description !== "" ? playlist.description : "By " + playlist.owner.display_name;
+
                 return {
                     name: playlist.name,
                     playlistID: playlist.id,
                     ownerID: playlist.owner.id,
                     image: imageResult,
+                    caption: libraryCaption,
                 };
             })
             )

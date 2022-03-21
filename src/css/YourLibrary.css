@@ -50,16 +50,23 @@
 }
 
     .playlistPreview span {
-        padding: 10px 10px 10px 20px;
+        padding: 5px 10px 0px 20px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-       
     }
 
     .playlistPreview:hover {
         background-color: #1a1a1b;
     }
+
+.playlistName {
+    color: white;
+    font-weight: bold;
+}
+.playlistCaption {
+    font-size: 0.8rem;
+}
 
 .imgWrap {
     display: flex;
@@ -82,9 +89,10 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 0 1.5rem 1rem 0;
+    margin: 0 2.2rem 1.3rem 0;
     transform: translateY(10%);
     transition: all 0.3s ease-in-out;
+    box-shadow: 5px 5px 20px rgb(0, 0, 0, 0.9);
 }
 .playCircleIcon {
     transform: scale(2);
@@ -100,5 +108,6 @@
     opacity: 1;
     transform: translateY(0); 
 }
+
 
 

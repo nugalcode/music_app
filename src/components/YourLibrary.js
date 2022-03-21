@@ -32,7 +32,8 @@ const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) 
                                         <PlayCircleIcon className="playCircleIcon" onClick={(e) => handleUris(e, playlist)} />
                                     </div>
                                 </div>
-                                <span> {playlist.name} </span>
+                                <span className="playlistName"> {playlist.name} </span>
+                                <span className="playlistCaption"> {playlist.caption} </span> 
                             </div>
                         )
                     })
