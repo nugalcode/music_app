@@ -11,8 +11,8 @@
 .likedSongsPreview {
     display: flex;
     margin: 10px;
-    width: 320px;
-    height: 200px;
+    width: 420px;
+    height: 267px;
     background-color: #101011;
     border-radius: 5px;
 }
@@ -42,15 +42,15 @@
     flex-direction: column;
     margin: 10px;
     background-color: #101011;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 267px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
 
     .playlistPreview span {
-        padding: 10px 10px 10px 15px;
+        padding: 10px 10px 10px 20px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -66,11 +66,14 @@
     position: relative;
     padding: 10px;
     justify-content: center;
+    width: 90%;
+    align-self: center;
 }
 
 .playlistImage {
-    width: 120px;
-    height: 120px;
+    width: inherit;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.9);
 }
 
 .playIconWrap {
