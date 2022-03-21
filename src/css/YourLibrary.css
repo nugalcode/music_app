@@ -57,7 +57,7 @@
     }
 
     .playlistPreview:hover {
-        background-color: #1a1a1b;
+        background-color: #242425;
     }
 
 .playlistName {
@@ -80,7 +80,7 @@
 .playlistImage {
     width: inherit;
     border-radius: 3px;
-    box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.9);
+    box-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
 }
 
 .playIconWrap {
