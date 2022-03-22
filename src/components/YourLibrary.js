@@ -18,6 +18,8 @@ const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) 
         <div className="yourLibrary">
             <div className="playlistsPreviewContainer">
                 <div className="likedSongsPreview">
+                    <div className="likedSongsCaption"> Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler
+                        Filler -webkit-box-orient: vertical; -webkit-box-orient: vertical; aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
                     <span> Liked Songs </span>
                 </div>
                 {playlists.map((playlist,index) => {

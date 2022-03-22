@@ -10,20 +10,33 @@
 
 .likedSongsPreview {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin: 10px;
     width: 420px;
     height: 267px;
-    background-color: #101011;
+    background-color: mediumslateblue;
     border-radius: 5px;
 }
 
     .likedSongsPreview span {
-        padding: 10px;
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 15px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
+.likedSongsCaption {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    height: 25%;
+    margin: 15px;
+}
 .playlistsPreviewContainer {
     display: flex;
     flex-wrap: wrap;
