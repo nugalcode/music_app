@@ -1,8 +1,11 @@
 import React from 'react';
 import '../css/YourLibrary.css';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import useLikedSongs from '../hooks/useLikedSongs';
 
-const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) => {
+const YourLibrary = ({ playLikedSongs, playlists, handlePlaylistTracks, changeUrisByPlaylist }) => {
+
+    const likedSongs = useLikedSongs();
 
     const handlePlaylist = (playlist) => {
         handlePlaylistTracks(playlist)
@@ -14,15 +17,20 @@ const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) 
         changeUrisByPlaylist(playlist);
     }
 
+    const handleLikedSongs = () => {
+        playLikedSongs(likedSongs);
+    }
+
+
     return (
         <div className="yourLibrary">
             <div className="playlistsPreviewContainer">
-                <div className="likedSongsPreview">
+                <div className="likedSongsPreview" onClick={() => handleLikedSongs()}>
                     <div className="likedSongsCaption"> Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler
                         Filler -webkit-box-orient: vertical; -webkit-box-orient: vertical; aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
                     <span> Liked Songs </span>
                     <div className="playIconWrap">
-                        <PlayCircleIcon className="playCircleIcon"/>
+                        <PlayCircleIcon className="playCircleIcon" />
                     </div>
                 </div>
                 {playlists.map((playlist,index) => {

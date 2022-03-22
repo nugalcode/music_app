@@ -38,6 +38,7 @@ export const Dashboard = ({ code }) => {
     const [isLiked, setIsLiked] = useState([]);
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
+    const [likedSongs, setLikedSongs] = useState(false);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -49,7 +50,12 @@ export const Dashboard = ({ code }) => {
 
     const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
-    }, [setSearchResults])
+        setLikedSongs(songs)
+    }, [setSearchResults, setLikedSongs])
+
+    const playLikedSongs = (songs) => {
+        setSearchResults(songs);
+    }
 
     const addNewPlaylist = useCallback((newPlaylist) => {
         const currentPlaylists = userPlaylists;
@@ -326,7 +332,7 @@ export const Dashboard = ({ code }) => {
                         />
                     </form>
 
-                    {showLibrary && <YourLibrary playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
+                    {showLibrary && <YourLibrary playLikedSongs={playLikedSongs}playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
                     { showSongs && <div className="songsContainer">
                         <TrackHeader />
                         {searchResults.map((track, index) => {
