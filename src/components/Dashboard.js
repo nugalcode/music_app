@@ -38,7 +38,6 @@ export const Dashboard = ({ code }) => {
     const [isLiked, setIsLiked] = useState([]);
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
-    const [likedSongs, setLikedSongs] = useState(false);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -50,8 +49,7 @@ export const Dashboard = ({ code }) => {
 
     const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
-        setLikedSongs(songs)
-    }, [setSearchResults, setLikedSongs])
+    }, [setSearchResults])
 
     const playLikedSongs = (songs) => {
         setSearchResults(songs);
@@ -64,7 +62,6 @@ export const Dashboard = ({ code }) => {
     }, [setUserPlaylists, userPlaylists]);
 
     const displayUserLibrary = () => {
-        console.log("setting songs to false and library to true");
         setShowSongs(false);
         setShowLibrary(true);
     }
