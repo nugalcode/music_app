@@ -9,6 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
+import useLikedSongs from '../hooks/useLikedSongs';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -36,6 +37,8 @@ export const Dashboard = ({ code }) => {
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const [isLiked, setIsLiked] = useState([]);
+    const likedSongs = useLikedSongs(spotifyApi, convertDuration, userID);
+
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
 
@@ -51,8 +54,8 @@ export const Dashboard = ({ code }) => {
         setSearchResults(songs);
     }, [setSearchResults])
 
-    const playLikedSongs = (songs) => {
-        setSearchResults(songs);
+    const playLikedSongs = () => {
+        setSearchResults(likedSongs);
     }
 
     const addNewPlaylist = useCallback((newPlaylist) => {
@@ -232,7 +235,6 @@ export const Dashboard = ({ code }) => {
         if (!accessToken || !userID) return;
 
         spotifyApi.getUserPlaylists(userID, { limit: 50 }).then(res => {
-            console.log(res.body.items);
             setUserPlaylists(res.body.items.map((playlist, index) => {
                 const images = playlist.images;
                

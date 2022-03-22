@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
-import { ContextApi, convertDuration } from '../components/Dashboard';
+import { useState, useEffect } from 'react';
 
-const useLikedSongs = () => {
-    const spotifyApi = useContext(ContextApi);
+export default function useLikedSongs(spotifyApi, convertDuration, userID) {
     const [likedSongs, setLikedSongs] = useState([]);
-
+    
     useEffect(() => {
-        if (!spotifyApi) return;
-
+        if (!spotifyApi || !userID) {
+            return;
+        }
         spotifyApi.getMySavedTracks({ limit: 50 })
             .then(res => {
                 setLikedSongs(
@@ -36,13 +35,11 @@ const useLikedSongs = () => {
                         }
                     })
                 )
-            }).catch(() => {
-                console.log("Error getting user's saved tracks.")
-                return
+            }).catch((err) => {
+                console.log("Error trying to get user's saved tracks.");
+                console.log(err);
             })
-    },[spotifyApi])
+    },[spotifyApi, convertDuration, userID])
         
     return likedSongs;
 }
-
-export default useLikedSongs;

@@ -1,11 +1,8 @@
 import React from 'react';
 import '../css/YourLibrary.css';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import useLikedSongs from '../hooks/useLikedSongs';
 
 const YourLibrary = ({ playLikedSongs, playlists, handlePlaylistTracks, changeUrisByPlaylist }) => {
-
-    const likedSongs = useLikedSongs();
 
     const handlePlaylist = (playlist) => {
         handlePlaylistTracks(playlist)
@@ -18,9 +15,8 @@ const YourLibrary = ({ playLikedSongs, playlists, handlePlaylistTracks, changeUr
     }
 
     const handleLikedSongs = () => {
-        playLikedSongs(likedSongs);
+        playLikedSongs();
     }
-
 
     return (
         <div className="yourLibrary">
