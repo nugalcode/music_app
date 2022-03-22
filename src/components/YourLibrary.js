@@ -21,6 +21,9 @@ const YourLibrary = ({ playlists, handlePlaylistTracks, changeUrisByPlaylist }) 
                     <div className="likedSongsCaption"> Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler Filler
                         Filler -webkit-box-orient: vertical; -webkit-box-orient: vertical; aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
                     <span> Liked Songs </span>
+                    <div className="playIconWrap">
+                        <PlayCircleIcon className="playCircleIcon"/>
+                    </div>
                 </div>
                 {playlists.map((playlist,index) => {
                         return (

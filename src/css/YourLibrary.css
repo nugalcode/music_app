@@ -17,6 +17,8 @@
     height: 267px;
     background-color: mediumslateblue;
     border-radius: 5px;
+    cursor: pointer;
+    position: relative;
 }
 
     .likedSongsPreview span {
@@ -26,6 +28,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: white;
     }
 
 .likedSongsCaption {
@@ -36,6 +39,12 @@
     height: 25%;
     margin: 15px;
 }
+
+.likedSongsPreview:hover .playIconWrap {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .playlistsPreviewContainer {
     display: flex;
     flex-wrap: wrap;
