@@ -37,7 +37,7 @@ export const Dashboard = ({ code }) => {
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const [isLiked, setIsLiked] = useState([]);
-    const likedSongs = useLikedSongs(spotifyApi, convertDuration, userID);
+    const likedSongs = useLikedSongs(spotifyApi, convertDuration, userID, isLiked);
 
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useLikedSongs(spotifyApi, convertDuration, userID) {
+export default function useLikedSongs(spotifyApi, convertDuration, userID, isLiked) {
     const [likedSongs, setLikedSongs] = useState([]);
     
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function useLikedSongs(spotifyApi, convertDuration, userID) {
                 console.log("Error trying to get user's saved tracks.");
                 console.log(err);
             })
-    },[spotifyApi, convertDuration, userID])
+    },[spotifyApi, convertDuration, userID, isLiked])
         
     return likedSongs;
 }
