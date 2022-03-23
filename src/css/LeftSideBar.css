@@ -38,6 +38,7 @@
     display: flex;
     align-items: center;
     padding: 5px;
+    transition: color 0.2s ease-in-out;
 }
 
     .navItemWrap div {
@@ -45,7 +46,7 @@
     }
 
     .navItemWrap:hover {
-        background-color: var(--myGray);
+        color: white;
     }
 
 .playlists {
