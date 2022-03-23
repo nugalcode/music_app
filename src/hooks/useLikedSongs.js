@@ -1,3 +1,8 @@
+/**
+ *  custom hook to get a logged in user's Saved Track (Liked Songs)
+ *  @userID param and @isLiked are useEffect dependencies to update @likedSongs state variable whenever
+ *          user likes or unlikes a song
+ */
 import { useState, useEffect, useContext } from 'react';
 import { ContextApi, convertDuration } from '../components/Dashboard.js'
 
