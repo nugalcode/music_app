@@ -9,10 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
-import useLikedSongs from '../hooks/useLikedSongs';
-import useUserPlaylists from '../hooks/useUserPlaylists';
-import useContainsSavedTracks from '../hooks/useContainsSavedTracks';
-import usePlaylistTracks from '../hooks/usePlaylistTracks';
+import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
