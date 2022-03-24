@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { ContextApi } from './Dashboard'
-
 /**
  *  @track is passed down from Dashboard
  *   containing artist, title, uri, albumUrl
@@ -21,9 +19,8 @@ const checkIfLiked = (number, likedSongs) => {
     }
 }
 
-const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen }) => {
+const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
 
-    const spotifyApi = useContext(ContextApi);
     const [isCurrent, setIsCurrent] = useState(false);
     const [hover, setHover] = useState(false);
     const [isLiked, setIsLiked] = useState(() => {
@@ -32,26 +29,8 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen }) 
 
     // if user likes / unlikes a track
     const handleLikeChange = () => {
-        if (!spotifyApi || !track || !track.id) return
-        const liked = isLiked;
-        if (liked) {
-            setIsLiked(false);
-            spotifyApi.removeFromMySavedTracks([track.id])
-                .then(res => {
-                    console.log("Song successfully removed from liked songs!")
-                }).catch((err) => {
-                    console.log("Error trying to remove song from liked songs!")
-                })
-        }
-        else {
-            setIsLiked(true);
-            spotifyApi.addToMySavedTracks([track.id])
-                .then(res => {
-                    console.log("Song successfully added to liked songs!")
-                }).catch((err) => {
-                    console.log("Error trying to add song to liked songs!")
-                })
-        }
+        changeTrackLikeStatus(track, isLiked);
+        setIsLiked(!isLiked);
     }
 
     // Checks if the track is in the user's Liked Songs

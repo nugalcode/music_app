@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -38,7 +38,7 @@ export const Dashboard = ({ code }) => {
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const userPlaylists = useUserPlaylists(userID, addNewPlaylist);
     const [isLiked, setIsLiked] = useState([]);
-    const likedSongs = useLikedSongs(userID, isLiked);
+    const likedSongs = useLikedSongs(userID, changeTrackLikeStatus);
 
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
@@ -47,6 +47,24 @@ export const Dashboard = ({ code }) => {
         setPlayingTrack(track);
     }
 
+    function changeTrackLikeStatus(track, likeStatus) {
+        if (likeStatus) {
+            spotifyApi.removeFromMySavedTracks([track.id])
+                .then(res => {
+                    console.log("Song successfully removed from liked songs!")
+                }).catch((err) => {
+                    console.log("Error trying to remove song from liked songs!")
+                })
+        }
+        else {
+            spotifyApi.addToMySavedTracks([track.id])
+                .then(res => {
+                    console.log("Song successfully added to liked songs!")
+                }).catch((err) => {
+                    console.log("Error trying to add song to liked songs!")
+                })
+        }
+    }
     function handlePlaylistTracks(playlist) {
         setCurrentPlaylist(playlist);
     }
@@ -62,9 +80,9 @@ export const Dashboard = ({ code }) => {
             });
     }
 
-    const displayLikedSongs = useCallback((songs) => {
-        setSearchResults(songs);
-    }, [setSearchResults])
+    const displayLikedSongs = () => {
+        setSearchResults(likedSongs);
+    }
 
     const playLikedSongs = () => {
         setSearchResults(likedSongs);
@@ -314,6 +332,7 @@ export const Dashboard = ({ code }) => {
                                     chooseTrack={chooseTrack}
                                     likedSongs={isLiked}
                                     handleSetMenuIsOpen={handleSetMenuIsOpen}
+                                    changeTrackLikeStatus={changeTrackLikeStatus}
                                 />
                             )
                         }
