@@ -32,12 +32,13 @@ export const ContextApi = React.createContext(spotifyApi);
 export const Dashboard = ({ code }) => {
 
     const accessToken = useAuth(code);
+    const [userID, setUserID] = useState("");
+
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
-    const [userID, setUserID] = useState("");
-    const [currentPlaylist, setCurrentPlaylist] = useState({});
 
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
     //used to trigger useLikedSongs custom hook to update likedSongs
@@ -45,6 +46,7 @@ export const Dashboard = ({ code }) => {
     const isLiked = useContainsSavedTracks(searchResults);
     const likedSongs = useLikedSongs(userID, userLikeTracker);
 
+    const [currentPlaylist, setCurrentPlaylist] = useState({});
     const [newPlaylistID, setNewPlaylistID] = useState("");
     const userPlaylists = useUserPlaylists(userID, newPlaylistID);
     const playlistToDisplay = usePlaylistTracks(currentPlaylist);
