@@ -54,20 +54,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
 
     // add a new playlist 
     const createPlaylist = () => {
-        if (!spotifyApi) return
-
-        spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
-            .then(function (data) {
-                console.log('Created playlist!');
-                const playlist = data.body;
-                addNewPlaylist({
-                    name: playlist.name,
-                    playlistID: playlist.id,
-                    ownerID: playlist.owner.id,
-                });
-            }, function (err) {
-                console.log('Error trying to create playlist!', err);
-            });
+        addNewPlaylist();
     }
 
     return (

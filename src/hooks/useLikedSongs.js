@@ -9,9 +9,9 @@ import { ContextApi, convertDuration } from '../components/Dashboard.js'
 export default function useLikedSongs(userID, isLiked) {
     const [likedSongs, setLikedSongs] = useState([]);
     const spotifyApi = useContext(ContextApi);
-    
+
     useEffect(() => {
-        if (!userID) {
+        if (!spotifyApi || !userID) {
             return;
         }
         spotifyApi.getMySavedTracks({ limit: 50 })
@@ -46,7 +46,7 @@ export default function useLikedSongs(userID, isLiked) {
                 console.log("Error trying to get user's saved tracks.");
                 console.log(err);
             })
-    },[userID, isLiked])
+    },[spotifyApi, userID, isLiked])
         
     return likedSongs;
 }

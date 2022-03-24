@@ -10,6 +10,7 @@ import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
 import useLikedSongs from '../hooks/useLikedSongs';
+import useUserPlaylists from '../hooks/useUserPlaylists';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -33,9 +34,10 @@ export const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
-    const [userPlaylists, setUserPlaylists] = useState([]);
+    //const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
+    const userPlaylists = useUserPlaylists(userID, addNewPlaylist);
     const [isLiked, setIsLiked] = useState([]);
     const likedSongs = useLikedSongs(userID, isLiked);
 
@@ -49,6 +51,17 @@ export const Dashboard = ({ code }) => {
     function handlePlaylistTracks(playlist) {
         setCurrentPlaylist(playlist);
     }
+    function addNewPlaylist() {
+        if (!spotifyApi) return;
+
+        spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
+            .then(function (data) {
+                console.log('Created playlist!');
+                console.log(data.body);
+            }, function (err) {
+                console.log('Error trying to create playlist!', err);
+            });
+    }
 
     const displayLikedSongs = useCallback((songs) => {
         setSearchResults(songs);
@@ -57,12 +70,6 @@ export const Dashboard = ({ code }) => {
     const playLikedSongs = () => {
         setSearchResults(likedSongs);
     }
-
-    const addNewPlaylist = useCallback((newPlaylist) => {
-        const currentPlaylists = userPlaylists;
-        var newPlaylists = [newPlaylist].concat(currentPlaylists);
-        setUserPlaylists(newPlaylists);
-    }, [setUserPlaylists, userPlaylists]);
 
     const displayUserLibrary = () => {
         setShowSongs(false);
@@ -229,41 +236,6 @@ export const Dashboard = ({ code }) => {
         })
 
     }, [accessToken])
-
-    // getting the user's playlists
-    useEffect(() => {
-        if (!accessToken || !userID) return;
-
-        spotifyApi.getUserPlaylists(userID, { limit: 50 }).then(res => {
-            setUserPlaylists(res.body.items.map((playlist, index) => {
-                const images = playlist.images;
-               
-                if (!images.length) {
-
-                }
-                const biggestAlbumImage = images.reduce(
-                    (biggest, image) => {
-                        if (image.height > biggest.height) return image
-                        return biggest;
-                    },
-                    images[0]
-                )
-                const imageResult = biggestAlbumImage ? biggestAlbumImage.url : "";
-
-                const libraryCaption = playlist.description !== "" ? playlist.description : "By " + playlist.owner.display_name;
-
-                return {
-                    name: playlist.name,
-                    playlistID: playlist.id,
-                    ownerID: playlist.owner.id,
-                    image: imageResult,
-                    caption: libraryCaption,
-                };
-            })
-            )
-        })
-        
-    }, [accessToken, userID])
 
     // handle search term on change and on enter
     const handleOnChange = (e) => {
