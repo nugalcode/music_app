@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { ContextApi, convertDuration } from '../components/Dashboard';
-
+/**
+ * custom hook that gets and returns the passed in playlist's tracks
+ * @playlist triggers the useEffect, which calls the spotifyApi to get the playlist's tracks
+ */
 export default function usePlaylistTracks(playlist) {
 
     const spotifyApi = useContext(ContextApi);
