@@ -12,6 +12,7 @@ import YourLibrary from './YourLibrary.js';
 import useLikedSongs from '../hooks/useLikedSongs';
 import useUserPlaylists from '../hooks/useUserPlaylists';
 import useContainsSavedTracks from '../hooks/useContainsSavedTracks';
+import usePlaylistTracks from '../hooks/usePlaylistTracks';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -40,12 +41,13 @@ export const Dashboard = ({ code }) => {
 
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
     //used to trigger useLikedSongs custom hook to update likedSongs
-    const [userLikeTracker, setUserLikeTracker] = useState(0)
+    const [userLikeTracker, setUserLikeTracker] = useState(0);
     const isLiked = useContainsSavedTracks(searchResults);
     const likedSongs = useLikedSongs(userID, userLikeTracker);
 
     const [newPlaylistID, setNewPlaylistID] = useState("");
     const userPlaylists = useUserPlaylists(userID, newPlaylistID);
+    const playlistToDisplay = usePlaylistTracks(currentPlaylist);
 
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
@@ -109,45 +111,10 @@ export const Dashboard = ({ code }) => {
         setShowLibrary(false);
     }, [searchResults]);
     
-    // get the clicked playlist tracks and set search results accordingly
+    // Display the playlistToDisplay
     useEffect(() => {
-        // Object.keys is a built-in javascript method to check if an object is empty
-        // I'm doing this because checking if an object is empty (i.e. !object) does not work
-        // as expected like it does with arrays or strings
-        if (!accessToken || !Object.keys(currentPlaylist).length || !currentPlaylist.playlistID) return;
-
-        spotifyApi.getPlaylistTracks(currentPlaylist.playlistID).then(res => {
-            setSearchResults(
-                res.body.items.map((item, index) => {
-                    const track = item.track;
-                    // find the smallest album image
-                    const smallestAlbumImage = track.album.images.reduce(
-                        (smallest, image) => {
-                            if (image.height < smallest.height) return image
-                            return smallest;
-                        },
-                        track.album.images[0]
-                    )
-
-                    const duration = convertDuration(track.duration_ms);
-
-                    return {
-                        artist: track.artists[0].name,
-                        title: track.name,
-                        uri: track.uri,
-                        albumName: track.album.name,
-                        albumUrl: smallestAlbumImage.url,
-                        duration: duration,
-                        offset: index,
-                        id: track.id,
-                    }
-                })
-            )
-        }).catch(() => {
-            console.log("Error trying to get playlist tracks");
-        })
-    
-    }, [currentPlaylist, accessToken])
+        setSearchResults(playlistToDisplay);
+    }, [playlistToDisplay, accessToken])
 
     const changeUrisByPlaylist = (playlist) => {
         console.log("Inside changeUrisByPlaylist");
