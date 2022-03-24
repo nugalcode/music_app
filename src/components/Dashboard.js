@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -36,10 +36,10 @@ export const Dashboard = ({ code }) => {
     const [currentUris, setCurrentUris] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
-    const userPlaylists = useUserPlaylists(userID, addNewPlaylist);
     const [isLiked, setIsLiked] = useState([]);
     const likedSongs = useLikedSongs(userID, changeTrackLikeStatus);
-
+    const [newPlaylistID, setNewPlaylistID] = useState("");
+    const userPlaylists = useUserPlaylists(userID, newPlaylistID);
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
 
@@ -68,17 +68,17 @@ export const Dashboard = ({ code }) => {
     function handlePlaylistTracks(playlist) {
         setCurrentPlaylist(playlist);
     }
-    function addNewPlaylist() {
+    const addNewPlaylist = useCallback(() => {
         if (!spotifyApi) return;
-
         spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
             .then(function (data) {
                 console.log('Created playlist!');
                 console.log(data.body);
+                setNewPlaylistID(data.body.id)
             }, function (err) {
                 console.log('Error trying to create playlist!', err);
             });
-    }
+    },[setNewPlaylistID])
 
     const displayLikedSongs = () => {
         setSearchResults(likedSongs);

@@ -6,7 +6,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { ContextApi } from '../components/Dashboard.js';
 
-export default function useUserPlaylists(userID, addNewPlaylist) {
+export default function useUserPlaylists(userID, newPlaylistID) {
 
     const spotifyApi = useContext(ContextApi);
     const [userPlaylists, setUserPlaylists] = useState([]);
@@ -40,7 +40,7 @@ export default function useUserPlaylists(userID, addNewPlaylist) {
             )
         })
 
-    }, [spotifyApi, userID, addNewPlaylist])
+    }, [spotifyApi, userID, newPlaylistID])
 
     return userPlaylists;
 
