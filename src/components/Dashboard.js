@@ -11,6 +11,7 @@ import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
 import useLikedSongs from '../hooks/useLikedSongs';
 import useUserPlaylists from '../hooks/useUserPlaylists';
+import useContainsSavedTracks from '../hooks/useContainsSavedTracks';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -40,7 +41,7 @@ export const Dashboard = ({ code }) => {
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
     //used to trigger useLikedSongs custom hook to update likedSongs
     const [userLikeTracker, setUserLikeTracker] = useState(0)
-    const [isLiked, setIsLiked] = useState([]);
+    const isLiked = useContainsSavedTracks(searchResults);
     const likedSongs = useLikedSongs(userID, userLikeTracker);
 
     const [newPlaylistID, setNewPlaylistID] = useState("");
@@ -53,7 +54,7 @@ export const Dashboard = ({ code }) => {
         setPlayingTrack(track);
     }
 
-    function changeTrackLikeStatus(track, likeStatus) {
+    function changeTrackLikeStatus (track, likeStatus) {
         if (likeStatus) {
             spotifyApi.removeFromMySavedTracks([track.id])
                 .then(res => {
@@ -88,7 +89,7 @@ export const Dashboard = ({ code }) => {
             }, function (err) {
                 console.log('Error trying to create playlist!', err);
             });
-    },[setNewPlaylistID])
+    },[])
 
     const displayLikedSongs = () => {
         setSearchResults(likedSongs);
@@ -102,47 +103,12 @@ export const Dashboard = ({ code }) => {
         setShowSongs(false);
         setShowLibrary(true);
     }
+
     useEffect(() => {
         setShowSongs(true);
         setShowLibrary(false);
     }, [searchResults]);
-    // when searchResults changes, check which tracks are in the liked songs playlist
-    // doing batch check to avoid Error 429: too many api requests
-    useEffect(() => {
-        if (!searchResults.length || !spotifyApi) return
-        const checkIfLiked = () => {
-            const results = searchResults;
-            var tracksToCheck = (results.map((track) => {
-                return track.id
-            })
-            )
-            // Spotify API has limit of 50 track checks per query
-            var lastIndex = -1;
-            const length = tracksToCheck.length;
-            if ((length > 0) && (length < 50)) {
-                lastIndex = length - 1;
-            }
-            else {
-                lastIndex = 49;
-            }
-
-            const temp = lastIndex === 0 ? tracksToCheck : tracksToCheck.slice(0, lastIndex);
-            if (!temp.length) return
-
-            spotifyApi.containsMySavedTracks(temp)
-                .then((res) => {
-                    setIsLiked(res.body.map((result) => {
-                        return result
-                    })
-                    )
-                }).catch((err) => {
-                    console.log("Error checking if tracks are in user's Liked Songs")
-                    console.log(err);
-                })
-        }
-
-        checkIfLiked();
-    }, [searchResults])
+    
     // get the clicked playlist tracks and set search results accordingly
     useEffect(() => {
         // Object.keys is a built-in javascript method to check if an object is empty
@@ -301,8 +267,6 @@ export const Dashboard = ({ code }) => {
         document.addEventListener('mousedown', handleOnClick);
         return () => document.removeEventListener('mousedown', handleOnClick);
     }, [menuIsOpen])
-
-
 
     const handleSetMenuIsOpen = (position) => {
         setMenuIsOpen(!menuIsOpen);
