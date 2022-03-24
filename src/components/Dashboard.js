@@ -36,10 +36,16 @@ export const Dashboard = ({ code }) => {
     const [currentUris, setCurrentUris] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
+
+    //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
+    //used to trigger useLikedSongs custom hook to update likedSongs
+    const [userLikeTracker, setUserLikeTracker] = useState(0)
     const [isLiked, setIsLiked] = useState([]);
-    const likedSongs = useLikedSongs(userID, changeTrackLikeStatus);
+    const likedSongs = useLikedSongs(userID, userLikeTracker);
+
     const [newPlaylistID, setNewPlaylistID] = useState("");
     const userPlaylists = useUserPlaylists(userID, newPlaylistID);
+
     const [showSongs, setShowSongs] = useState(false);
     const [showLibrary, setShowLibrary] = useState(false);
 
@@ -52,6 +58,8 @@ export const Dashboard = ({ code }) => {
             spotifyApi.removeFromMySavedTracks([track.id])
                 .then(res => {
                     console.log("Song successfully removed from liked songs!")
+                    const temp = userLikeTracker === 0 ? 1 : 0;
+                    setUserLikeTracker(temp);
                 }).catch((err) => {
                     console.log("Error trying to remove song from liked songs!")
                 })
@@ -60,6 +68,8 @@ export const Dashboard = ({ code }) => {
             spotifyApi.addToMySavedTracks([track.id])
                 .then(res => {
                     console.log("Song successfully added to liked songs!")
+                    const temp = userLikeTracker === 0 ? 1 : 0;
+                    setUserLikeTracker(temp);
                 }).catch((err) => {
                     console.log("Error trying to add song to liked songs!")
                 })

@@ -6,7 +6,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { ContextApi, convertDuration } from '../components/Dashboard.js'
 
-export default function useLikedSongs(userID, changeTrackLikeStatus) {
+export default function useLikedSongs(userID, userLikeTracker) {
     const [likedSongs, setLikedSongs] = useState([]);
     const spotifyApi = useContext(ContextApi);
 
@@ -16,6 +16,7 @@ export default function useLikedSongs(userID, changeTrackLikeStatus) {
         }
         spotifyApi.getMySavedTracks({ limit: 50 })
             .then(res => {
+                console.log("gettingSavedTracks");
                 setLikedSongs(
                     res.body.items.map((item, index) => {
                         const track = item.track;
@@ -46,7 +47,7 @@ export default function useLikedSongs(userID, changeTrackLikeStatus) {
                 console.log("Error trying to get user's saved tracks.");
                 console.log(err);
             })
-    }, [spotifyApi, userID, changeTrackLikeStatus])
+    }, [spotifyApi, userID, userLikeTracker])
         
     return likedSongs;
 }
