@@ -34,7 +34,6 @@ export const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
-    //const [userPlaylists, setUserPlaylists] = useState([]);
     const [userID, setUserID] = useState("");
     const [currentPlaylist, setCurrentPlaylist] = useState({});
     const userPlaylists = useUserPlaylists(userID, addNewPlaylist);
