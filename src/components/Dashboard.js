@@ -80,6 +80,13 @@ export const Dashboard = ({ code }) => {
                 })
         }
     }
+    const displayLikedSongs = () => {
+        setSearchResults(likedSongs);
+    }
+    const playLikedSongs = () => {
+        setSearchResults(likedSongs);
+    }
+
     function handlePlaylistTracks(playlist) {
         setCurrentPlaylist(playlist);
     }
@@ -94,14 +101,6 @@ export const Dashboard = ({ code }) => {
                 console.log('Error trying to create playlist!', err);
             });
     },[])
-
-    const displayLikedSongs = () => {
-        setSearchResults(likedSongs);
-    }
-
-    const playLikedSongs = () => {
-        setSearchResults(likedSongs);
-    }
 
     const displayUserLibrary = () => {
         setShowSongs(false);
