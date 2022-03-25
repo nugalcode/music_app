@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -9,7 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
-import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
+import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks, usePlayingUris } from '../hooks/customHooks';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -35,8 +35,8 @@ export const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const [playingTrack, setPlayingTrack] = useState();
-    const [currentUris, setCurrentUris] = useState([]);
-
+    const [urisDispatch, setUrisDispatch] = useState({});
+    const currentUris = usePlayingUris(searchResults, urisDispatch);
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
     //used to trigger useLikedSongs custom hook to update likedSongs
     const [userLikeTracker, setUserLikeTracker] = useState(0);
@@ -53,6 +53,10 @@ export const Dashboard = ({ code }) => {
 
     function chooseTrack(track) {
         setPlayingTrack(track);
+        setUrisDispatch({
+            type: 'track',
+            playlist: ''
+            })
     }
 
     function changeTrackLikeStatus (track, likeStatus) {
@@ -115,29 +119,11 @@ export const Dashboard = ({ code }) => {
     }, [playlistToDisplay, accessToken])
 
     const changeUrisByPlaylist = (playlist) => {
-        console.log("Inside changeUrisByPlaylist");
-        spotifyApi.getPlaylistTracks(playlist.playlistID).then(res => {
-            setCurrentUris(
-                res.body.items.map((item, index) => {
-                    return item.track.uri
-                })
-            )
-        }).catch(() => {
-            console.log("Error trying to get playlist tracks");
+        setUrisDispatch({
+            type: 'playlist',
+            playlist: playlist.playlistID
         })
     }
-    // setCurrentUris
-    useEffect(() => {
-        if (!playingTrack) return
-        const handleFunc = () => {
-                setCurrentUris(
-                    searchResults.map((track) => {
-                        return track.uri
-                    })
-                )
-        }
-        handleFunc();
-    }, [playingTrack, searchResults])
 
     // setting spotify api access token 
     useEffect(() => {
@@ -213,6 +199,10 @@ export const Dashboard = ({ code }) => {
 
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const [menuPosition, setMenuPosition] = useState({});
+    const searchBarRef = useRef();
+    const focusSearchBar = () => {
+        if (searchBarRef.current) searchBarRef.current.focus();
+    }
     useEffect(() => {
         const handleOnClick = (e) => {
             e.preventDefault();
@@ -245,7 +235,10 @@ export const Dashboard = ({ code }) => {
 
                 {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists}/>}
 
-                <LeftSideBar displayUserLibrary={displayUserLibrary}addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} />
+                <LeftSideBar displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
+                    displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}
+                    focusSearchBar={focusSearchBar}
+                />
 
                 <div className="dashboardCenter">
 
@@ -256,6 +249,7 @@ export const Dashboard = ({ code }) => {
                             placeholder="Search Song or Artist"
                             value={searchTerm}
                             onChange={handleOnChange}
+                            ref={searchBarRef}
                         />
                     </form>
 

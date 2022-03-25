@@ -3,12 +3,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
-const Nav = ({ displayUserLibrary }) => {
+const Nav = ({ displayUserLibrary, focusSearchBar}) => {
 
-    const handleOnClick = () => {
+    const handleDisplayLibrary = () => {
         displayUserLibrary();
     }
-
+    const handleSearchFocus = () => {
+        focusSearchBar();
+    }
     return (
         <div className="nav">
 
@@ -17,14 +19,14 @@ const Nav = ({ displayUserLibrary }) => {
                 <div>  Home  </div>
             </div>
 
-            <div className="navItemWrap">
+            <div className="navItemWrap" onClick={() => handleSearchFocus()}>
                 <SearchIcon className="navIcon" />
                 <div> Search </div>
             </div>
 
-            <div className="navItemWrap">
+            <div className="navItemWrap" onClick={() => handleDisplayLibrary()}>
                 <LibraryMusicIcon className="navIcon"/>
-                <div onClick={() => handleOnClick()}> Your Library </div>
+                <div> Your Library </div>
             </div>
 
         </div>
