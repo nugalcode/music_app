@@ -6,9 +6,11 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 const Nav = ({ displayUserLibrary, focusSearchBar}) => {
 
     const handleDisplayLibrary = () => {
+        if (typeof displayUserLibrary === 'undefined') return;
         displayUserLibrary();
     }
     const handleSearchFocus = () => {
+        if (typeof handleSearchFocus === 'undefined') return;
         focusSearchBar();
     }
     return (
