@@ -1,33 +1,26 @@
-import { useEffect, useReducer, useContext } from 'react';
-import { ContextApi } from '../components/Dashboard';
+import { useState, useEffect } from 'react';
+import { usePlaylistTracks } from './customHooks';
 
 export default function usePlayingUris(searchResults, dispatch) {
-    const spotifyApi = useContext(ContextApi);
-
-    const [playingUris, setPlayingUris] = useReducer((state, action) => {
-        switch (action.type) {
-            case 'track':
-                console.log("in case track")
-                if (!searchResults.length) return
-                return searchResults.map((track) => {
-                    return track.uri
-                })
-            case 'playlist':
-                return action.result;
-            default:
-                return state;
-        }
-	},[]);
+    const playlistTracks = usePlaylistTracks(dispatch.playlist);
+    const [playingUris, setPlayingUris] = useState([]);
 
     useEffect(() => {
         if (!dispatch || !Object.keys(dispatch).length) return
-        
-        setPlayingUris({
-            type: dispatch.type,
-            playlist: dispatch.playlist
-        });
+
+        if (dispatch.type === 'track') {
+            if (!searchResults.length) return;
+            setPlayingUris(searchResults.map((track) => {
+                return track.uri
+            }));
+        }
+        else {
+            setPlayingUris(playlistTracks.map((track) => {
+                return track.uri
+            }));
+        }
                
-    }, [dispatch])
+    }, [dispatch, searchResults, playlistTracks])
 
     return playingUris;
 

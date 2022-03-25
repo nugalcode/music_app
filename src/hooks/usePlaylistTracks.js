@@ -14,7 +14,7 @@ export default function usePlaylistTracks(playlist) {
         // Object.keys is a built-in javascript method to check if an object is empty
         // I'm doing this because checking if an object is empty (i.e. !object) does not work
         // as expected like it does with arrays or strings
-        if (!spotifyApi || !Object.keys(playlist).length || !playlist.playlistID) return;
+        if (!spotifyApi || typeof playlist === 'undefined' || !Object.keys(playlist).length || !playlist.playlistID) return;
 
         spotifyApi.getPlaylistTracks(playlist.playlistID).then(res => {
             console.log("in usePlaylistTracks");

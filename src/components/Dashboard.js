@@ -121,7 +121,7 @@ export const Dashboard = ({ code }) => {
     const changeUrisByPlaylist = (playlist) => {
         setUrisDispatch({
             type: 'playlist',
-            playlist: playlist.playlistID
+            playlist: playlist
         })
     }
 
