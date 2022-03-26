@@ -13,10 +13,15 @@ export default function Player({ accessToken, currentTrack, uris }) {
         }
 
         handleFunc();
-    }, [currentTrack, setOffset]) 
+    }, [currentTrack]) 
 
     useEffect(() => {
-        setPlay(true);
+        const handleFunc = () => {
+            if (!uris.length) return
+            if (offset > uris.length - 1) { setOffset(0) };
+            setPlay(true);
+        }
+        handleFunc();
     }, [offset, uris])
 
     if (!accessToken) return null
