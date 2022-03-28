@@ -23,7 +23,7 @@ export default function Player({ accessToken, currentTrack, uris }) {
             setPlay(true);
         }
         handleFunc();
-    }, [uris])
+    }, [uris, offset])
 
     if (!accessToken) return null
 

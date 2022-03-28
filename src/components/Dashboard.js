@@ -9,7 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
-import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks, usePlayingUris } from '../hooks/customHooks';
+import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
@@ -35,8 +35,7 @@ export const Dashboard = ({ code }) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const [playingTrack, setPlayingTrack] = useState();
-    const [urisDispatch, setUrisDispatch] = useState({});
-    const currentUris = usePlayingUris(searchResults, urisDispatch);
+    const [currentUris, setCurrentUris] = useState([]);
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
     //used to trigger useLikedSongs custom hook to update likedSongs
     const [userLikeTracker, setUserLikeTracker] = useState(0);
@@ -53,10 +52,9 @@ export const Dashboard = ({ code }) => {
 
     function chooseTrack(track) {
         setPlayingTrack(track);
-        setUrisDispatch({
-            type: 'track',
-            playlist: {}
-            })
+        setCurrentUris(searchResults.map((track) => {
+            return track.uri
+        }));
     }
 
     function changeTrackLikeStatus (track, likeStatus) {
@@ -119,18 +117,19 @@ export const Dashboard = ({ code }) => {
     }, [playlistToDisplay, accessToken])
 
     const changeUrisByPlaylist = (playlist) => {
-        setUrisDispatch({
-            type: 'playlist',
-            playlist: playlist
+        if (!spotifyApi || typeof playlist === 'undefined' || !Object.keys(playlist).length || !playlist.playlistID) return;
+
+        spotifyApi.getPlaylistTracks(playlist.playlistID).then(res => {
+            setCurrentUris(
+                res.body.items.map((item) => {
+                    return item.track.uri
+                })
+            )
+        }).catch(() => {
+            console.log("Error trying to get playlist uris");
         })
     }
 
-    useEffect(() => {
-        setUrisDispatch({
-            type: '',
-            playlist: {}
-        })
-    }, [currentUris])
     // setting spotify api access token 
     useEffect(() => {
         if (!accessToken) return;
