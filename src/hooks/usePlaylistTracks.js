@@ -17,7 +17,6 @@ export default function usePlaylistTracks(playlist) {
         if (!spotifyApi || typeof playlist === 'undefined' || !Object.keys(playlist).length || !playlist.playlistID) return;
 
         spotifyApi.getPlaylistTracks(playlist.playlistID).then(res => {
-            console.log("in usePlaylistTracks");
             setPlaylistTracks(
                 res.body.items.map((item, index) => {
                     const track = item.track;

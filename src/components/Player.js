@@ -18,11 +18,12 @@ export default function Player({ accessToken, currentTrack, uris }) {
     useEffect(() => {
         const handleFunc = () => {
             if (!uris.length) return
-            if (offset > uris.length - 1) { setOffset(0) };
+            console.log(uris);
+            if (offset > uris.length - 1){ setOffset(0) };
             setPlay(true);
         }
         handleFunc();
-    }, [offset, uris])
+    }, [uris])
 
     if (!accessToken) return null
 

@@ -55,7 +55,7 @@ export const Dashboard = ({ code }) => {
         setPlayingTrack(track);
         setUrisDispatch({
             type: 'track',
-            playlist: ''
+            playlist: {}
             })
     }
 
@@ -125,6 +125,12 @@ export const Dashboard = ({ code }) => {
         })
     }
 
+    useEffect(() => {
+        setUrisDispatch({
+            type: '',
+            playlist: {}
+        })
+    }, [currentUris])
     // setting spotify api access token 
     useEffect(() => {
         if (!accessToken) return;

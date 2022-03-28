@@ -1,26 +1,22 @@
 import { useState, useEffect } from 'react';
-import { usePlaylistTracks } from './customHooks';
+import { usePlaylistTracks, useTracksUris } from './customHooks';
 
 export default function usePlayingUris(searchResults, dispatch) {
-    const playlistTracks = usePlaylistTracks(dispatch.playlist);
     const [playingUris, setPlayingUris] = useState([]);
+    const playlistTracks = usePlaylistTracks(dispatch.playlist);
+    const searchResultUris = useTracksUris(searchResults);
+    const playlistUris = useTracksUris(playlistTracks);
 
     useEffect(() => {
-        if (!dispatch || !Object.keys(dispatch).length) return
-
+        if (!dispatch || !Object.keys(dispatch).length || dispatch.type === '') return;
         if (dispatch.type === 'track') {
-            if (!searchResults.length) return;
-            setPlayingUris(searchResults.map((track) => {
-                return track.uri
-            }));
+            setPlayingUris(searchResultUris);
         }
         else {
-            setPlayingUris(playlistTracks.map((track) => {
-                return track.uri
-            }));
+            setPlayingUris(playlistUris);
         }
-               
-    }, [dispatch, searchResults, playlistTracks])
+
+    }, [dispatch, playlistUris, searchResultUris])
 
     return playingUris;
 
