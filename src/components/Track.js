@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -19,9 +19,8 @@ const checkIfLiked = (number, likedSongs) => {
     }
 }
 
-const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
+const Track = ({ track, number, isPlaying, chooseTrack, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
 
-    const [isCurrent, setIsCurrent] = useState(false);
     const [hover, setHover] = useState(false);
     const [isLiked, setIsLiked] = useState(() => {
         return checkIfLiked(number, likedSongs)
@@ -32,8 +31,10 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, ch
         changeTrackLikeStatus(track, isLiked);
         setIsLiked(!isLiked);
     }
-
-    // Checks if the track is in the user's Liked Songs
+    const handlePlay = () => {
+        chooseTrack(track);
+    }
+    // set the liked status of this track
     useEffect(() => {
         if (!likedSongs.length || !track || !track.id) return
 
@@ -49,27 +50,6 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, ch
 
     }, [track, likedSongs, number])
 
-    const ref = useRef();
-
-    const handlePlay = () => {
-        chooseTrack(track);
-    }
-
-    useEffect(() => {
-        const handleTitle = (e) => {
-            // if the click is not on this component, then set playing to false
-            if (ref.current && !ref.current.contains(e.target)) {
-                setIsCurrent(false);
-            }
-            else if (ref.current && ref.current.contains(e.target)) {
-                setIsCurrent(true);
-            }
-        }
-
-        document.addEventListener('mouseup', handleTitle);
-        return () => document.removeEventListener('mouseup', handleTitle)
-    })
-
     const handleOnClick = (e) => {
         const position = { x: e.clientX, y: e.clientY };
         handleSetMenuIsOpen(position);
@@ -80,7 +60,6 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, ch
         <div className="track"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            ref={ref}
         >
 
             <div className="playAndNumberWrap">
@@ -93,7 +72,7 @@ const Track = ({ track, number, chooseTrack, likedSongs, handleSetMenuIsOpen, ch
             <img src={track.albumUrl} alt="track_pic" />
 
             <div className="titleAndArtistWrap">
-                <span className={isCurrent ? "title greenTitle" : "title"} title={track.title}> {track.title} </span>
+                <span className={isPlaying ? "title greenTitle" : "title"} title={track.title}> {track.title} </span>
                 <span className="artist"> {track.artist} </span>
             </div>
 

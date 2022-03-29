@@ -6,6 +6,6 @@
     "\\src\\components",
     "\\src\\hooks"
   ],
-  "SelectedNode": "\\src\\hooks\\usePlayingUris.js",
+  "SelectedNode": "\\src\\components\\Player.js",
   "PreviewInSolutionExplorer": false
 }

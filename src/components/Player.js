@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback'
-
-export default function Player({ accessToken, currentTrack, uris }) {
-    const [play, setPlay] = useState(false);
-    const [offset, setOffset] = useState(0);
+/*const [offset, setOffset] = useState(0);
 
     useEffect(() => {
         if (!currentTrack) return
@@ -13,7 +10,7 @@ export default function Player({ accessToken, currentTrack, uris }) {
         }
 
         handleFunc();
-    }, [currentTrack]) 
+    }, [currentTrack])
 
     useEffect(() => {
         const handleFunc = () => {
@@ -23,8 +20,29 @@ export default function Player({ accessToken, currentTrack, uris }) {
             setPlay(true);
         }
         handleFunc();
-    }, [uris, offset])
+    }, [uris])
 
+    useEffect(() => {
+        console.log(offset);
+    }, [offset])*/
+export default function Player({ accessToken, currentTrack, uris }) {
+    const [play, setPlay] = useState(false);
+    const [offset, setOffset] = useState(-1);
+    const [currUris, setCurrUris] = useState([]);
+
+    useEffect(() => {
+        if (!uris.length) return;
+        setCurrUris(uris);
+        if (offset > uris.length - 1) { setOffset(0) };
+    }, [uris])
+    useEffect(() => {
+        if (!currentTrack) return;
+        setOffset(currentTrack.offset);
+    }, [currUris, currentTrack])
+
+    useEffect(() => {
+        setPlay(true);
+    }, [offset])
     if (!accessToken) return null
 
     return <SpotifyPlayer
@@ -33,13 +51,13 @@ export default function Player({ accessToken, currentTrack, uris }) {
         callback={state => {
             if (!state.isPlaying) {
                 setPlay(false);
+                console.log("setting play to false");
+                state.needsUpdate = true;
             }
-            else
-                setPlay(true);
         }}
         play={play}
         offset={offset}
-        uris={uris}
+        uris={currUris}
         styles={{
             activeColor: '#fff',
             bgColor: '#28282b',

@@ -266,6 +266,7 @@ export const Dashboard = ({ code }) => {
                                 <Track
                                     key={index}
                                     track={track}
+                                    isPlaying={playingTrack?.uri === track.uri}
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
                                     likedSongs={isLiked}
