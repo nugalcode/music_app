@@ -258,7 +258,7 @@ export const Dashboard = ({ code }) => {
                         />
                     </form>
 
-                    {showLibrary && <YourLibrary playLikedSongs={playLikedSongs}playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
+                    {showLibrary && <YourLibrary playLikedSongs={playLikedSongs} likedSongs={likedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
                     { showSongs && <div className="songsContainer">
                         <TrackHeader />
                         {searchResults.map((track, index) => {

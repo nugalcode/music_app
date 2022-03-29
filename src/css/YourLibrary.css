@@ -21,15 +21,20 @@
     position: relative;
 }
 
-    .likedSongsPreview span {
-        font-size: 2rem;
-        font-weight: bold;
-        margin: 15px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: white;
-    }
+.likedSongsTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 5px 15px 5px 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: white;
+}
+
+.numLikedSongs {
+    color: white;
+    margin: 0px 15px 15px 15px;
+}
 
 .likedSongsCaption {
     overflow: hidden;
@@ -38,6 +43,24 @@
     -webkit-box-orient: vertical;
     height: 25%;
     margin: 15px;
+}
+
+.likedSongsTrackArtist {
+    color: white;
+    font-weight: normal;
+}
+
+.likedSongsTrackTitle {
+    color: var(--myGrayFontColor);
+    font-weight: normal;
+}
+.likedSongsBullet {
+    display: inline-block;
+    height: 5px;
+    width: 5px;
+    background-color: var(--myGrayFontColor);
+    vertical-align: middle;
+    border-radius: 5px;
 }
 
 .likedSongsPreview:hover .playIconWrap {
