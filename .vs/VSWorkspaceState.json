@@ -1,11 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
     "\\server",
     "\\src",
     "\\src\\components",
+    "\\src\\css",
     "\\src\\hooks"
   ],
-  "SelectedNode": "\\src\\components\\Track.js",
+  "SelectedNode": "\\public\\index.html",
   "PreviewInSolutionExplorer": false
 }

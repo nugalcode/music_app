@@ -83,7 +83,9 @@ export const Dashboard = ({ code }) => {
         setSearchResults(likedSongs);
     }
     const playLikedSongs = () => {
-        setSearchResults(likedSongs);
+        setCurrentUris(likedSongs.map((track) => {
+            return track.uri;
+        }));
     }
 
     function handlePlaylistTracks(playlist) {
@@ -258,7 +260,7 @@ export const Dashboard = ({ code }) => {
                         />
                     </form>
 
-                    {showLibrary && <YourLibrary playLikedSongs={playLikedSongs} likedSongs={likedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
+                    {showLibrary && <YourLibrary displayLikedSongs={displayLikedSongs} playLikedSongs={playLikedSongs} likedSongs={likedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
                     { showSongs && <div className="songsContainer">
                         <TrackHeader />
                         {searchResults.map((track, index) => {
