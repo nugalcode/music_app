@@ -12,8 +12,6 @@ const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":
             return { uris: action.uris, offset: action.offset, play: true };
-        case "changeOffset":
-            return { uris: action.uris, offset: action.offset, play: true };
         case "stopPlaying":
             return { uris: action.uris, offset: action.offset, play: false };
         default:
