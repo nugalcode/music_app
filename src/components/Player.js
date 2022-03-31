@@ -1,48 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback'
-/*const [offset, setOffset] = useState(0);
+
+const initialState =
+{
+    uris: [],
+    offset: 0,
+    play: false,
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "changeUris":
+            return { uris: action.uris, offset: action.offset, play: true };
+        case "changeOffset":
+            return { uris: action.uris, offset: action.offset, play: true };
+        case "stopPlaying":
+            return { uris: action.uris, offset: action.offset, play: false };
+        default:
+            throw new Error();
+    }
+}
+export default function Player({ accessToken, offset, uris }) {
+
+    const [playerDetails, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        if (!currentTrack) return
+        dispatch({ type: "changeUris", uris: uris, offset: offset });
+    }, [uris, offset])
 
-        const handleFunc = () => {
-            setOffset(currentTrack.offset)
-        }
-
-        handleFunc();
-    }, [currentTrack])
-
-    useEffect(() => {
-        const handleFunc = () => {
-            if (!uris.length) return
-            console.log(uris);
-            if (offset > uris.length - 1){ setOffset(0) };
-            setPlay(true);
-        }
-        handleFunc();
-    }, [uris])
-
-    useEffect(() => {
-        console.log(offset);
-    }, [offset])*/
-export default function Player({ accessToken, currentTrack, uris }) {
-    const [play, setPlay] = useState(false);
-    const [offset, setOffset] = useState(-1);
-    const [currUris, setCurrUris] = useState([]);
-
-    useEffect(() => {
-        if (!uris.length) return;
-        setCurrUris(uris);
-        if (offset > uris.length - 1) { setOffset(0) };
-    }, [uris])
-    useEffect(() => {
-        if (!currentTrack) return;
-        setOffset(currentTrack.offset);
-    }, [currUris, currentTrack])
-
-    useEffect(() => {
-        setPlay(true);
-    }, [offset])
     if (!accessToken) return null
 
     return <SpotifyPlayer
@@ -50,14 +35,13 @@ export default function Player({ accessToken, currentTrack, uris }) {
         showSaveIcon
         callback={state => {
             if (!state.isPlaying) {
-                setPlay(false);
-                console.log("setting play to false");
-                state.needsUpdate = true;
+                dispatch({type: "stopPlaying"});
             }
+    
         }}
-        play={play}
-        offset={offset}
-        uris={currUris}
+        play={playerDetails.play}
+        offset={playerDetails.offset}
+        uris={playerDetails.uris}
         styles={{
             activeColor: '#fff',
             bgColor: '#28282b',
@@ -66,7 +50,8 @@ export default function Player({ accessToken, currentTrack, uris }) {
             sliderColor: '#1cb954',
             trackArtistColor: '#ccc',
             trackNameColor: '#ffffff',
-            
+           
         }}
     />
+ 
 }

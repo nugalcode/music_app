@@ -83,6 +83,7 @@ export const Dashboard = ({ code }) => {
         setSearchResults(likedSongs);
     }
     const playLikedSongs = () => {
+        setPlayingTrack(likedSongs[0]);
         setCurrentUris(likedSongs.map((track) => {
             return track.uri;
         }));
@@ -122,6 +123,7 @@ export const Dashboard = ({ code }) => {
         if (!spotifyApi || typeof playlist === 'undefined' || !Object.keys(playlist).length || !playlist.playlistID) return;
 
         spotifyApi.getPlaylistTracks(playlist.playlistID).then(res => {
+            setPlayingTrack(res.body.items[0]);
             setCurrentUris(
                 res.body.items.map((item) => {
                     return item.track.uri
@@ -284,7 +286,7 @@ export const Dashboard = ({ code }) => {
                 <RightSideBar />
 
                 <div className="playerWrap">
-                    <Player accessToken={accessToken} currentTrack={playingTrack} uris={currentUris}/>
+                    <Player accessToken={accessToken} offset={playingTrack?.offset} uris={currentUris} />
                 </div>
 
                 </div>

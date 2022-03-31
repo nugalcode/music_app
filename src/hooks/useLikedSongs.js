@@ -17,7 +17,6 @@ export default function useLikedSongs(userID, userLikeTracker) {
         spotifyApi.getMySavedTracks({ limit: 50 })
             .then(res => {
                 console.log("gettingSavedTracks");
-                console.log(res.body);
                 setLikedSongs(
                     res.body.items.map((item, index) => {
                         const track = item.track;
