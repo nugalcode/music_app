@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -19,7 +20,7 @@ const checkIfLiked = (number, likedSongs) => {
     }
 }
 
-const Track = ({ track, number, isPlaying, chooseTrack, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
+const Track = ({ track, number, isCurrent, isPlaying, chooseTrack, pausePlayer, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
 
     const [hover, setHover] = useState(false);
     const [isLiked, setIsLiked] = useState(() => {
@@ -33,6 +34,9 @@ const Track = ({ track, number, isPlaying, chooseTrack, likedSongs, handleSetMen
     }
     const handlePlay = () => {
         chooseTrack(track);
+    }
+    const handlePause = () => {
+        pausePlayer();
     }
     // set the liked status of this track
     useEffect(() => {
@@ -64,7 +68,11 @@ const Track = ({ track, number, isPlaying, chooseTrack, likedSongs, handleSetMen
 
             <div className="playAndNumberWrap">
                 { hover ?
-                    <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()}/>
+                    (isPlaying && isCurrent ?
+                        <PauseIcon className="trackPlayArrowIcon" onClick={() => handlePause()}/>
+                        :
+                        <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()} />
+                    )
                     : <div className="songNumber"> {number} </div>
                 }
             </div>
@@ -72,7 +80,7 @@ const Track = ({ track, number, isPlaying, chooseTrack, likedSongs, handleSetMen
             <img src={track.albumUrl} alt="track_pic" />
 
             <div className="titleAndArtistWrap">
-                <span className={isPlaying ? "title greenTitle" : "title"} title={track.title}> {track.title} </span>
+                <span className={isCurrent ? "title greenTitle" : "title"} title={track.title}> {track.title} </span>
                 <span className="artist"> {track.artist} </span>
             </div>
 

@@ -34,6 +34,7 @@ export const Dashboard = ({ code }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    const [isPlaying, setIsPlaying] = useState(false);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
@@ -51,10 +52,25 @@ export const Dashboard = ({ code }) => {
     const [showLibrary, setShowLibrary] = useState(false);
 
     function chooseTrack(track) {
+        playPlayer();
         setPlayingTrack(track);
         setCurrentUris(searchResults.map((track) => {
             return track.uri
         }));
+    }
+
+    function pausePlayer() {
+        if (isPlaying) {
+            console.log("pausePlayer Dashboard")
+            setIsPlaying(false);
+        }
+    }
+
+    function playPlayer() {
+        if (!isPlaying) {
+            console.log("playPlayer Dashboard")
+            setIsPlaying(true);
+        }
     }
 
     function changeTrackLikeStatus (track, likeStatus) {
@@ -114,6 +130,10 @@ export const Dashboard = ({ code }) => {
         setShowLibrary(false);
     }, [searchResults]);
     
+    useEffect(() => {
+        if (!currentUris.length) return;
+        setIsPlaying(true);
+    }, [currentUris])
     // Display the playlistToDisplay
     useEffect(() => {
         setSearchResults(playlistToDisplay);
@@ -270,9 +290,11 @@ export const Dashboard = ({ code }) => {
                                 <Track
                                     key={index}
                                     track={track}
-                                    isPlaying={playingTrack?.uri === track.uri}
+                                    isCurrent={playingTrack?.uri === track.uri}
+                                    isPlaying={isPlaying}
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
+                                    pausePlayer={pausePlayer}
                                     likedSongs={isLiked}
                                     handleSetMenuIsOpen={handleSetMenuIsOpen}
                                     changeTrackLikeStatus={changeTrackLikeStatus}
@@ -286,7 +308,7 @@ export const Dashboard = ({ code }) => {
                 <RightSideBar />
 
                 <div className="playerWrap">
-                    <Player accessToken={accessToken} offset={playingTrack?.offset} uris={currentUris} />
+                    <Player accessToken={accessToken} offset={playingTrack?.offset} uris={currentUris} isPlaying={isPlaying} pausePlayer={pausePlayer} playPlayer={playPlayer}/>
                 </div>
 
                 </div>

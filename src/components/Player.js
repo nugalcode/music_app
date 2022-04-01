@@ -12,19 +12,28 @@ const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":
             return { uris: action.uris, offset: action.offset, play: true };
+      //  case "changeOffset":
+      //      return { uris: [...state.uris], offset: action.offset, play: true };
         case "stopPlaying":
             return { uris: action.uris, offset: action.offset, play: false };
+      //  case "stopPlayingFromTrack":
+      //      return { uris: [...state.uris], offset: state.offset, play: false };
         default:
             throw new Error();
     }
 }
-export default function Player({ accessToken, offset, uris }) {
+export default function Player({ accessToken, offset, uris, isPlaying, pausePlayer, playPlayer }) {
 
     const [playerDetails, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         dispatch({ type: "changeUris", uris: uris, offset: offset });
     }, [uris, offset])
+
+    useEffect(() => {
+        if (isPlaying) return;
+        dispatch({ type: "stopPlaying" });
+    }, [isPlaying])
 
     if (!accessToken) return null
 
@@ -33,9 +42,12 @@ export default function Player({ accessToken, offset, uris }) {
         showSaveIcon
         callback={state => {
             if (!state.isPlaying) {
-                dispatch({type: "stopPlaying"});
+                dispatch({ type: "stopPlaying", uris: uris, offset: offset });
+                pausePlayer();
             }
-    
+            else if (state.isPlaying) {
+                playPlayer();
+            }
         }}
         play={playerDetails.play}
         offset={playerDetails.offset}
