@@ -3,7 +3,8 @@
     align-items: center;
     padding: 5px 20px 5px 40px;
     height: 65px;
-    background-color: rgb(25, 20, 20, 0.8);
+  /*  background-color: rgb(25, 20, 20, 0.8); */
+    background-color: #101011;
     width: 95%;
 }
 
@@ -12,8 +13,8 @@
     }
 
 .track img {
-    height: 64px;
-    width: 64px;
+    height: 40px;
+    width: 40px;
     padding: 0px 10px 0px 10px;
 }
 
@@ -109,16 +110,16 @@
 .TrackHeader {
     display: flex;
     align-items: center;
-    padding: 5px 10px 5px 40px;
+    padding: 5px 30px 5px 40px;
     height: 65px;
-    width: inherit;
-    background-color: rgb(25, 20, 20, 0.8);
+    width: 95%;
+    background-color: #101011;
     text-transform: uppercase;
     border-bottom: 0.1rem solid dimgrey;
 }
 
 .TrackHeader .titleAndArtistWrap {
-    min-width: 39%;
+    width: 50%;
 }
 
 

@@ -27,11 +27,12 @@
 .songsContainer {
     display: flex;
     flex-direction: column;
-    background-color: var(--myGray);
+    background-color: #101011;
     overflow-y: auto;
     overflow-x: clip;
     color: var(--myGrayFontColor);
     padding-bottom: 30px;
+    position: relative;
 }
 
 .playerWrap {

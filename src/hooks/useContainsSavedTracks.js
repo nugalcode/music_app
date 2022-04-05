@@ -31,7 +31,8 @@ export default function useContainsSavedTracks(searchResults) {
                 lastIndex = 49;
             }
 
-            const temp = lastIndex === 0 ? tracksToCheck : tracksToCheck.slice(0, lastIndex);
+            //.slice(begin, end) includes elements from arr[begin] up to but NOT INCLUDING arr[end]
+            const temp = lastIndex === 0 ? tracksToCheck : tracksToCheck.slice(0, lastIndex + 1);
             if (!temp.length) return
 
             spotifyApi.containsMySavedTracks(temp)

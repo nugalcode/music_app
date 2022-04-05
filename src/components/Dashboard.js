@@ -61,14 +61,14 @@ export const Dashboard = ({ code }) => {
 
     function pausePlayer() {
         if (isPlaying) {
-            console.log("pausePlayer Dashboard")
+          //  console.log("pausePlayer Dashboard")
             setIsPlaying(false);
         }
     }
 
     function playPlayer() {
         if (!isPlaying) {
-            console.log("playPlayer Dashboard")
+          //  console.log("playPlayer Dashboard")
             setIsPlaying(true);
         }
     }
