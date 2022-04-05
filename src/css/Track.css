@@ -1,8 +1,10 @@
 .track {
     display: flex;
     align-items: center;
-    padding: 5px 20px 5px 40px;
+    margin: 0px 20px 0px 20px;
+    padding: 5px 0px 5px 20px;
     height: 65px;
+    border-radius: 5px;
   /*  background-color: rgb(25, 20, 20, 0.8); */
     background-color: #101011;
     width: 95%;
