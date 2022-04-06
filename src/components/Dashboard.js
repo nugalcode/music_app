@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import '../css/Dashboard.css';
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -9,6 +9,8 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
+import { ACTIONS, playDetailsDispatchContext, playDetailsStateContext } from "../hooks/playDetailsContext";
+
 import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
 
 const spotifyApi = new SpotifyWebApi({
@@ -27,6 +29,8 @@ export function convertDuration(ms) {
 export const ContextApi = React.createContext(spotifyApi);
 
 export const Dashboard = ({ code }) => {
+    const  dispatch  = useContext(playDetailsDispatchContext);
+    const  state  = useContext(playDetailsStateContext);
 
     const accessToken = useAuth(code);
     const [userID, setUserID] = useState("");
@@ -34,7 +38,6 @@ export const Dashboard = ({ code }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
-    const [isPlaying, setIsPlaying] = useState(false);
     const [playingTrack, setPlayingTrack] = useState();
     const [currentUris, setCurrentUris] = useState([]);
     //simple state variable that flips between 0 and 1 whenever user likes/unlikes a track
@@ -52,26 +55,17 @@ export const Dashboard = ({ code }) => {
     const [showLibrary, setShowLibrary] = useState(false);
 
     function chooseTrack(track) {
-        playPlayer();
         setPlayingTrack(track);
         setCurrentUris(searchResults.map((track) => {
             return track.uri
         }));
     }
 
-    function pausePlayer() {
-        if (isPlaying) {
-          //  console.log("pausePlayer Dashboard")
-            setIsPlaying(false);
-        }
-    }
-
-    function playPlayer() {
-        if (!isPlaying) {
-          //  console.log("playPlayer Dashboard")
-            setIsPlaying(true);
-        }
-    }
+    useEffect(() => {
+        if (!playingTrack || !currentUris.length || !dispatch) return
+        
+        dispatch({ type: ACTIONS.CHANGEURIS, uris: currentUris, offset: playingTrack.offset });
+    }, [currentUris, playingTrack, dispatch])
 
     function changeTrackLikeStatus (track, likeStatus) {
         if (likeStatus) {
@@ -130,10 +124,6 @@ export const Dashboard = ({ code }) => {
         setShowLibrary(false);
     }, [searchResults]);
     
-    useEffect(() => {
-        if (!currentUris.length) return;
-        setIsPlaying(true);
-    }, [currentUris])
     // Display the playlistToDisplay
     useEffect(() => {
         setSearchResults(playlistToDisplay);
@@ -291,10 +281,8 @@ export const Dashboard = ({ code }) => {
                                     key={index}
                                     track={track}
                                     isCurrent={playingTrack?.uri === track.uri}
-                                    isPlaying={isPlaying}
                                     number={index + 1}
                                     chooseTrack={chooseTrack}
-                                    pausePlayer={pausePlayer}
                                     likedSongs={isLiked}
                                     handleSetMenuIsOpen={handleSetMenuIsOpen}
                                     changeTrackLikeStatus={changeTrackLikeStatus}
@@ -308,7 +296,7 @@ export const Dashboard = ({ code }) => {
                 <RightSideBar />
 
                 <div className="playerWrap">
-                    <Player accessToken={accessToken} offset={playingTrack?.offset} uris={currentUris} isPlaying={isPlaying} pausePlayer={pausePlayer} playPlayer={playPlayer}/>
+                    <Player accessToken={accessToken} />
                 </div>
 
                 </div>

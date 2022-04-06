@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import '../css/Track.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { ACTIONS, playDetailsDispatchContext, playDetailsStateContext } from "../hooks/playDetailsContext";
 /**
  *  @track is passed down from Dashboard
  *   containing artist, title, uri, albumUrl
@@ -20,8 +21,9 @@ const checkIfLiked = (number, likedSongs) => {
     }
 }
 
-const Track = ({ track, number, isCurrent, isPlaying, chooseTrack, pausePlayer, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
-
+const Track = ({ track, number, isCurrent, chooseTrack, likedSongs, handleSetMenuIsOpen, changeTrackLikeStatus }) => {
+    const dispatch = useContext(playDetailsDispatchContext);
+    const state = useContext(playDetailsStateContext);
     const [hover, setHover] = useState(false);
     const [isLiked, setIsLiked] = useState(() => {
         return checkIfLiked(number, likedSongs)
@@ -33,10 +35,15 @@ const Track = ({ track, number, isCurrent, isPlaying, chooseTrack, pausePlayer, 
         setIsLiked(!isLiked);
     }
     const handlePlay = () => {
+       // if (!state.play) {
+            dispatch({ type: ACTIONS.STARTPLAYING })
+        //}
         chooseTrack(track);
     }
     const handlePause = () => {
-        pausePlayer();
+        //if (state.play) {
+            dispatch({ type: ACTIONS.STOPPLAYING })
+        //}
     }
     // set the liked status of this track
     useEffect(() => {
@@ -68,7 +75,7 @@ const Track = ({ track, number, isCurrent, isPlaying, chooseTrack, pausePlayer, 
 
             <div className="playAndNumberWrap">
                 { hover ?
-                    (isPlaying && isCurrent ?
+                    (state.play && isCurrent ?
                         <PauseIcon className="trackPlayArrowIcon" onClick={() => handlePause()}/>
                         :
                         <PlayArrowIcon className="trackPlayArrowIcon" onClick={() => handlePlay()} />

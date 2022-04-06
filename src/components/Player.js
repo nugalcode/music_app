@@ -1,7 +1,7 @@
-import { useEffect, useReducer } from 'react';
+import { useContext } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback'
-
-const initialState =
+import { ACTIONS, playDetailsDispatchContext, playDetailsStateContext } from "../hooks/playDetailsContext";
+/*const initialState =
 {
     uris: [],
     offset: 0,
@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":
             console.log("changeUris")
-            return { uris: action.uris, offset: action.offset, play: false };
+            return { uris: action.uris, offset: action.offset, play: true };
         case "startPlaying":
             console.log("startPlaying")
             console.log(state.offset);
@@ -27,23 +27,22 @@ const reducer = (state, action) => {
         default:
             throw new Error();
     }
-}
-export default function Player({ accessToken, offset, uris, isPlaying, pausePlayer, playPlayer }) {
+}*/
+export default function Player({ accessToken }) {
+    const dispatch = useContext(playDetailsDispatchContext);
+    const  playDetailsState  = useContext(playDetailsStateContext);
 
-    const [playerDetails, dispatch] = useReducer(reducer, initialState);
-    
-    useEffect(() => {
-        dispatch({ type: "changeUris", uris: uris, offset: offset });
-    }, [uris, offset])
+    function handleStopPlayingCallback() {
+       // if (playDetailsState.play) {
+            dispatch({ type: ACTIONS.STOPPLAYING })
+        //}
+    }
 
-    useEffect(() => {
-        if (!isPlaying) {
-            dispatch({ type: "stopPlayingFromTrack" });
+    function handleStartPlayingCallback() {
+        if (!playDetailsState.play) {
+            dispatch({ type: ACTIONS.STOPPLAYING })
         }
-        else if (isPlaying) {
-            dispatch({ type: "startPlaying" });
-        }
-    }, [isPlaying])
+    }
 
     if (!accessToken) return null
 
@@ -52,18 +51,16 @@ export default function Player({ accessToken, offset, uris, isPlaying, pausePlay
         showSaveIcon
         callback={state => {
             if (!state.isPlaying) {
-                // dispatch({ type: "stopPlayingFromTrack", uris: uris, offset: offset });
-                if (isPlaying)
-                    pausePlayer();
+                handleStopPlayingCallback();
+               
             }
             else if (state.isPlaying) {
-                if (!isPlaying)
-                    playPlayer();
+                handleStartPlayingCallback();
             }
         }}
-        play={playerDetails.play}
-        offset={playerDetails.offset}
-        uris={playerDetails.uris}
+        play={playDetailsState.play}
+        offset={playDetailsState.offset}
+        uris={playDetailsState.uris}
         styles={{
             activeColor: '#fff',
             bgColor: '#28282b',
