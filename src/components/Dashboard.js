@@ -56,18 +56,8 @@ export const Dashboard = ({ code }) => {
 
     function chooseTrack(track) {
         setPlayingTrack(track);
-        /*setCurrentUris(searchResults.map((track) => {
-            return track.uri
-        }));*/
-        //if (track.uri !== state.uris[0])
-            dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
+        dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
     }
-
-    /*useEffect(() => {
-        if (!playingTrack || !currentUris.length || !dispatch) return
-        
-        dispatch({ type: ACTIONS.CHANGEURIS, uris: currentUris, offset: playingTrack.offset });
-    }, [currentUris, playingTrack, dispatch])*/
 
     useEffect(() => {
         if (!searchResults.length) return;
