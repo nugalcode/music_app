@@ -2,7 +2,9 @@ import { useState } from 'react';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ClearIcon from '@mui/icons-material/Clear';
+import AddedPlaylistSuccess from './AddedPlaylistSuccess.js';
 import '../css/Modal.css';
+
 
 const defaultPlaceholder = "New playlist name";
 const invalidPlaceholder = "Name must have at least one character!";
@@ -12,7 +14,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newPlaylistName, setNewPlaylistName] = useState("");
     const [placeholder, setPlaceholder] = useState(defaultPlaceholder)
-
+    const [playlistAdded, setPlaylistAdded] = useState(false);
 
     const handleModalClose = () => {
         setNewPlaylistName("");
@@ -37,7 +39,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
         addNewPlaylist(newPlaylistName);
         setNewPlaylistName("");
         setModalIsOpen(false);
-        
+        setPlaylistAdded(true);
     }
     // get the user's liked songs
     const getLikedSongs = () => {
@@ -48,8 +50,12 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
         e.stopPropagation();
     }
 
+    const timerFinished = () => {
+        setPlaylistAdded(false);
+    }
     return (
         <div className="navBottom">
+            {playlistAdded && <AddedPlaylistSuccess timerFinished={timerFinished}/>}
 
             {modalIsOpen &&
                 <div className="modal" onClick={() => handleModalClose()}>
