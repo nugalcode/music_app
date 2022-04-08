@@ -17,12 +17,6 @@ export const ACTIONS = {
     STOPPLAYING: "stopPlaying",
 }
 
-function getUris(tracks) {
-    return (tracks.map((track) => {
-        return track.uri
-    }));
-}
-
 const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":

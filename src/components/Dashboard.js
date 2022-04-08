@@ -56,15 +56,15 @@ export const Dashboard = ({ code }) => {
 
     function chooseTrack(track) {
         setPlayingTrack(track);
-        dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
-    }
-
-    useEffect(() => {
-        if (!searchResults.length) return;
         setCurrentUris(searchResults.map((track) => {
             return track.uri
         }));
-    }, [searchResults])
+    }
+
+    useEffect(() => {
+        if (!playingTrack) return;
+        dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: playingTrack.offset });
+    }, [currentUris, dispatch, playingTrack])
 
     function changeTrackLikeStatus (track, likeStatus) {
         if (likeStatus) {
