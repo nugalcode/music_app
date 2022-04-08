@@ -36,14 +36,14 @@ const Track = ({ track, number, isCurrent, chooseTrack, likedSongs, handleSetMen
     }
     const handlePlay = () => {
        // if (!state.play) {
-            dispatch({ type: ACTIONS.STARTPLAYING })
+         //   dispatch({ type: ACTIONS.STARTPLAYING })
         //}
         chooseTrack(track);
     }
     const handlePause = () => {
-        //if (state.play) {
+        if (state.play) {
             dispatch({ type: ACTIONS.STOPPLAYING })
-        //}
+        }
     }
     // set the liked status of this track
     useEffect(() => {

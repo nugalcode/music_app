@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback'
 import { ACTIONS, playDetailsDispatchContext, playDetailsStateContext } from "../hooks/playDetailsContext";
 /*const initialState =
@@ -33,16 +33,22 @@ export default function Player({ accessToken }) {
     const  playDetailsState  = useContext(playDetailsStateContext);
 
     function handleStopPlayingCallback() {
-       // if (playDetailsState.play) {
+        if (playDetailsState.play) {
             dispatch({ type: ACTIONS.STOPPLAYING })
-        //}
+        }
     }
 
     function handleStartPlayingCallback() {
         if (!playDetailsState.play) {
-            dispatch({ type: ACTIONS.STOPPLAYING })
+            dispatch({ type: ACTIONS.STARTPLAYING })
         }
     }
+
+    useEffect(() => {
+        if (!playDetailsState.uris.length) return;
+
+        dispatch({ type: ACTIONS.STARTPLAYING });
+    }, [playDetailsState.uris, dispatch])
 
     if (!accessToken) return null
 

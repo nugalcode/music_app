@@ -30,7 +30,7 @@ export const ContextApi = React.createContext(spotifyApi);
 
 export const Dashboard = ({ code }) => {
     const  dispatch  = useContext(playDetailsDispatchContext);
-    const  state  = useContext(playDetailsStateContext);
+    //const  state  = useContext(playDetailsStateContext);
 
     const accessToken = useAuth(code);
     const [userID, setUserID] = useState("");
@@ -56,16 +56,25 @@ export const Dashboard = ({ code }) => {
 
     function chooseTrack(track) {
         setPlayingTrack(track);
-        setCurrentUris(searchResults.map((track) => {
+        /*setCurrentUris(searchResults.map((track) => {
             return track.uri
-        }));
+        }));*/
+
+        dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (!playingTrack || !currentUris.length || !dispatch) return
         
         dispatch({ type: ACTIONS.CHANGEURIS, uris: currentUris, offset: playingTrack.offset });
-    }, [currentUris, playingTrack, dispatch])
+    }, [currentUris, playingTrack, dispatch])*/
+
+    useEffect(() => {
+        if (!searchResults.length) return;
+        setCurrentUris(searchResults.map((track) => {
+            return track.uri
+        }));
+    }, [searchResults])
 
     function changeTrackLikeStatus (track, likeStatus) {
         if (likeStatus) {

@@ -17,26 +17,29 @@ export const ACTIONS = {
     STOPPLAYING: "stopPlaying",
 }
 
+function getUris(tracks) {
+    return (tracks.map((track) => {
+        return track.uri
+    }));
+}
+
 const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":
             console.log("changeUris action")
             console.log(action.offset);
-            return { uris: action.uris, offset: action.offset, play: true };
-        case "changeOffset":
-            console.log("changeOffset")
-            return { uris: state.uris, offset: action.offset, play: state.play };
+            return { ...state, uris: [...action.uris], offset: action.offset };
         case "startPlaying":
             console.log("startPlaying")
-            return { uris: [...state.uris], offset: state.offset, play: true };
+            return { ...state, play: true };
         case "stopPlaying":
             console.log("stopPlaying");
-            return { uris: [...state.uris], offset: state.offset, play: false };
-        
+            return { ...state, uris: [], play: false };
         default:
             throw new Error();
     }
 }
+
 
 export const PlayDetailsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
