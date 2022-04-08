@@ -89,7 +89,7 @@ export const Dashboard = ({ code }) => {
         }
     }
     const displayLikedSongs = () => {
-        setSearchResults(likedSongs);
+        setSearchResults([...likedSongs]);
     }
     const playLikedSongs = () => {
         setPlayingTrack(likedSongs[0]);
@@ -99,7 +99,7 @@ export const Dashboard = ({ code }) => {
     }
 
     function handlePlaylistTracks(playlist) {
-        setCurrentPlaylist(playlist);
+        setCurrentPlaylist({ ...playlist });
     }
     const addNewPlaylist = useCallback(() => {
         if (!spotifyApi) return;
