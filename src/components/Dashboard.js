@@ -101,9 +101,9 @@ export const Dashboard = ({ code }) => {
     function handlePlaylistTracks(playlist) {
         setCurrentPlaylist({ ...playlist });
     }
-    const addNewPlaylist = useCallback(() => {
+    const addNewPlaylist = useCallback((newPlaylistName) => {
         if (!spotifyApi) return;
-        spotifyApi.createPlaylist('test playlist api', { 'description': 'test description', 'public': true })
+        spotifyApi.createPlaylist(newPlaylistName, { 'description': 'test description', 'public': true })
             .then(function (data) {
                 console.log('Created playlist!');
                 console.log(data.body);

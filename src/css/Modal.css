@@ -1,0 +1,58 @@
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgb(0, 0, 0, 0.75);
+    cursor: default;
+}
+
+.contentWrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+.playlistForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.newPlaylistNameBar {
+    display: flex;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0px 10px 10px;
+    outline: none;
+    width: 30vw;
+    height: 50px;
+    font-size: 20px;
+}
+.rightSideForm {
+    display: flex;
+}
+.modalButton {
+    margin: 10px 0px 10px 0px;
+    height: 70px;
+    width: 70px;
+    border-radius: 10px;
+    background-color: var(--myGrayFontColor);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.modalButton:hover {
+    background-color: white;
+}
+
+.exitButton {
+  
+}
+
+.exitButton:hover {
+    transform: scale(1.2);
+}
