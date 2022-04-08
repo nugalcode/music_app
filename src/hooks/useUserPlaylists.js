@@ -16,7 +16,6 @@ export default function useUserPlaylists(userID, newPlaylistID) {
 
         spotifyApi.getUserPlaylists(userID, { limit: 50 }).then(res => {
             setUserPlaylists(res.body.items.map((playlist, index) => {
-
                 const images = playlist.images;
                 const biggestAlbumImage = images.reduce(
                     (biggest, image) => {
@@ -26,7 +25,6 @@ export default function useUserPlaylists(userID, newPlaylistID) {
                     images[0]
                 )
                 const imageResult = biggestAlbumImage ? biggestAlbumImage.url : "";
-
                 const libraryCaption = playlist.description !== "" ? playlist.description : "By " + playlist.owner.display_name;
 
                 return {
@@ -35,6 +33,7 @@ export default function useUserPlaylists(userID, newPlaylistID) {
                     ownerID: playlist.owner.id,
                     image: imageResult,
                     caption: libraryCaption,
+                    numTracks: playlist.tracks.total
                 };
             })
             )

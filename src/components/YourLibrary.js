@@ -42,21 +42,22 @@ const YourLibrary = ({ displayLikedSongs, playLikedSongs, playlists, likedSongs,
                         <PlayCircleIcon className="playCircleIcon" />
                     </div>
                 </div>
-                {playlists.map((playlist,index) => {
-                        return (
-                            <div className="playlistPreview"
-                                key={index}
-                                onClick={() => handlePlaylist(playlist)}
-                            >
-                                <div className="imgWrap"> 
-                                    <img className="playlistImage" src={playlist.image !== "" ? playlist.image : "https://assets.dryicons.com/uploads/icon/svg/8256/d635dcbf-b76c-420b-a334-23eac4052ada.svg"} alt="" />
-                                    <div className="playIconWrap">
-                                        <PlayCircleIcon className="playCircleIcon" onClick={(e) => handleUris(e, playlist)} />
+                {playlists.map((playlist, index) => {
+                    return (
+                            playlist.numTracks > 0 &&
+                                <div className="playlistPreview"
+                                    key={index}
+                                    onClick={() => handlePlaylist(playlist)}
+                                >
+                                    <div className="imgWrap">
+                                        <img className="playlistImage" src={playlist.image !== "" ? playlist.image : "https://assets.dryicons.com/uploads/icon/svg/8256/d635dcbf-b76c-420b-a334-23eac4052ada.svg"} alt="" />
+                                        <div className="playIconWrap">
+                                            <PlayCircleIcon className="playCircleIcon" onClick={(e) => handleUris(e, playlist)} />
+                                        </div>
                                     </div>
+                                    <span className="playlistName"> {playlist.name} </span>
+                                    <span className="playlistCaption"> {playlist.caption} </span>
                                 </div>
-                                <span className="playlistName"> {playlist.name} </span>
-                                <span className="playlistCaption"> {playlist.caption} </span> 
-                            </div>
                         )
                     })
                 }
