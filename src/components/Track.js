@@ -35,10 +35,12 @@ const Track = ({ track, number, isCurrent, chooseTrack, likedSongs, handleSetMen
         setIsLiked(!isLiked);
     }
     const handlePlay = () => {
-       // if (!state.play) {
-         //   dispatch({ type: ACTIONS.STARTPLAYING })
-        //}
-        chooseTrack(track);
+        if (isCurrent) {
+            dispatch({ type: ACTIONS.STARTPLAYING })
+        }
+        else {
+            chooseTrack(track);
+        }
     }
     const handlePause = () => {
         if (state.play) {

@@ -30,7 +30,7 @@ export const ContextApi = React.createContext(spotifyApi);
 
 export const Dashboard = ({ code }) => {
     const  dispatch  = useContext(playDetailsDispatchContext);
-    //const  state  = useContext(playDetailsStateContext);
+   // const  state  = useContext(playDetailsStateContext);
 
     const accessToken = useAuth(code);
     const [userID, setUserID] = useState("");
@@ -59,8 +59,8 @@ export const Dashboard = ({ code }) => {
         /*setCurrentUris(searchResults.map((track) => {
             return track.uri
         }));*/
-
-        dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
+        //if (track.uri !== state.uris[0])
+            dispatch({ type: ACTIONS.CHANGEURIS, uris: [...currentUris], offset: track.offset });
     }
 
     /*useEffect(() => {

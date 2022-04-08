@@ -28,7 +28,7 @@ const reducer = (state, action) => {
         case "changeUris":
             console.log("changeUris action")
             console.log(action.offset);
-            return { ...state, uris: [...action.uris], offset: action.offset };
+            return { ...state, uris: action.uris, offset: action.offset };
         case "startPlaying":
             console.log("startPlaying")
             return { ...state, play: true };
