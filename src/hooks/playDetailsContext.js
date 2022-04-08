@@ -12,7 +12,6 @@ const initialState =
 
 export const ACTIONS = {
     CHANGEURIS: "changeUris",
-    CHANGEOFFSET: "changeOffset",
     STARTPLAYING: "startPlaying",
     STOPPLAYING: "stopPlaying",
 }
