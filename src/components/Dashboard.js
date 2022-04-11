@@ -217,6 +217,7 @@ export const Dashboard = ({ code }) => {
 
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const [menuPosition, setMenuPosition] = useState({});
+    const [trackToBeAdded, setTrackToBeAdded] = useState("");
     const searchBarRef = useRef();
     const focusSearchBar = () => {
         if (searchBarRef.current) searchBarRef.current.focus();
@@ -224,9 +225,6 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         const handleOnClick = (e) => {
             e.preventDefault();
-            setMenuIsOpen(true);
-            const position = { x: e.x, y: e.y };
-            setMenuPosition(position);
         }
         document.addEventListener('contextmenu', handleOnClick);
         return () => document.removeEventListener('contextmenu', handleOnClick);
@@ -241,17 +239,27 @@ export const Dashboard = ({ code }) => {
         return () => document.removeEventListener('mousedown', handleOnClick);
     }, [menuIsOpen])
 
-    const handleSetMenuIsOpen = (position) => {
+    const handleSetMenuIsOpen = (position, trackURI) => {
         setMenuIsOpen(!menuIsOpen);
         setMenuPosition(position);
-        console.log(position);
+        setTrackToBeAdded(trackURI);
     }
 
+    const addTrackToPlaylist = (playlistID) => {
+        spotifyApi.addTracksToPlaylist(playlistID, [trackToBeAdded])
+            .then(res => {
+                console.log("Added track to playlist!")
+            }).catch(err => {
+                console.log("Error trying to add track to playlist");
+                console.log(err);
+            });
+        setMenuIsOpen(false);
+    }
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
-                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists}/>}
+                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} />}
 
                 <LeftSideBar displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
                     displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}

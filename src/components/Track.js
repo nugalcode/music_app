@@ -65,7 +65,7 @@ const Track = ({ track, number, isCurrent, chooseTrack, likedSongs, handleSetMen
 
     const handleOnClick = (e) => {
         const position = { x: e.clientX, y: e.clientY };
-        handleSetMenuIsOpen(position);
+        handleSetMenuIsOpen(position, track.uri);
     }
         
     return (
