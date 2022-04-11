@@ -7,12 +7,39 @@
     cursor: default;
     font-size: 0.8rem;
     z-index: 9999;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
 }
 
 .contextMenuItem {
-    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    width: 150px;
+    position: relative;
 }
 
     .contextMenuItem:hover {
-        background-color: rgb(52, 52, 52)
+        background-color: rgb(52, 52, 52);
     }
+
+.contextPlaylists {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid transparent;
+    background-color: var(--myGray);
+    color: white;
+    cursor: default;
+    font-size: 0.8rem;
+    z-index: 9999;
+    position: absolute;
+    right: 170px;
+    border-radius: 5px;
+    overflow-y: auto;
+    height: 300px;
+    overflow-x: hidden;
+    box-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
+}
