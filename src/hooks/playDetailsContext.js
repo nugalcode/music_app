@@ -19,14 +19,10 @@ export const ACTIONS = {
 const reducer = (state, action) => {
     switch (action.type) {
         case "changeUris":
-            console.log("changeUris action")
-            console.log(action.offset);
             return { ...state, uris: action.uris, offset: action.offset };
         case "startPlaying":
-            console.log("startPlaying")
             return { ...state, play: true };
         case "stopPlaying":
-            console.log("stopPlaying");
             return { ...state, uris: [], play: false };
         default:
             throw new Error();
@@ -36,11 +32,6 @@ const reducer = (state, action) => {
 
 export const PlayDetailsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-
-    // use memo prevents unnecessary rerenders of children who are subscribed to this context
-   /* const contextValue = useMemo(() => {
-        return { state, dispatch };
-    }, [state, dispatch])*/
 
     return (
         <playDetailsStateContext.Provider value={state}>
