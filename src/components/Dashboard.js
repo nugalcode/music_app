@@ -207,12 +207,6 @@ export const Dashboard = ({ code }) => {
     const handleOnSubmit = (e) => {
         // prevents page refresh
         e.preventDefault();
-        // only search the term if it isn't empty
-        if (searchTerm) {
-            // call API
-           
-        }
-
     }
 
     const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -249,11 +243,12 @@ export const Dashboard = ({ code }) => {
         spotifyApi.addTracksToPlaylist(playlistID, [trackToBeAdded])
             .then(res => {
                 console.log("Added track to playlist!")
+                setTrackToBeAdded("");
+                setMenuIsOpen(false);
             }).catch(err => {
                 console.log("Error trying to add track to playlist");
                 console.log(err);
             });
-        setMenuIsOpen(false);
     }
     return (
         <ContextApi.Provider value={spotifyApi}>
