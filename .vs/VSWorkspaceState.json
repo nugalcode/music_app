@@ -1,13 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\server",
     "\\src",
     "\\src\\components",
-    "\\src\\css",
-    "\\src\\hooks"
+    "\\src\\css"
   ],
-  "SelectedNode": "\\src\\components\\ContextMenu.js",
+  "SelectedNode": "\\src\\components\\Dashboard.js",
   "PreviewInSolutionExplorer": false
 }

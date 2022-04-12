@@ -47,8 +47,8 @@ export const Dashboard = ({ code }) => {
     const likedSongs = useLikedSongs(userID, userLikeTracker);
 
     const [currentPlaylist, setCurrentPlaylist] = useState({});
-    const [newPlaylistID, setNewPlaylistID] = useState("");
-    const userPlaylists = useUserPlaylists(userID, newPlaylistID);
+    const [newPlaylist, setNewPlaylist] = useState({});
+    const userPlaylists = useUserPlaylists(userID, newPlaylist);
     const playlistToDisplay = usePlaylistTracks(currentPlaylist);
 
     const [showSongs, setShowSongs] = useState(false);
@@ -107,7 +107,7 @@ export const Dashboard = ({ code }) => {
             .then(function (data) {
                 console.log('Created playlist!');
                 console.log(data.body);
-                setNewPlaylistID(data.body.id)
+                setNewPlaylist(data.body)
             }, function (err) {
                 console.log('Error trying to create playlist!', err);
             });
@@ -212,6 +212,7 @@ export const Dashboard = ({ code }) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const [menuPosition, setMenuPosition] = useState({});
     const [trackToBeAdded, setTrackToBeAdded] = useState("");
+    const [playlistToBeRemoved, setPlaylistToBeRemoved] = useState({});
     const searchBarRef = useRef();
     const focusSearchBar = () => {
         if (searchBarRef.current) searchBarRef.current.focus();
@@ -219,15 +220,23 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         const handleOnClick = (e) => {
             e.preventDefault();
+            /*if (playlistToBeRemoved !== "") {
+                console.log("hello");
+                const position = { x: e.x, y: e.y };
+                setMenuPosition(position);
+                setMenuIsOpen(true);
+            }*/
         }
         document.addEventListener('contextmenu', handleOnClick);
         return () => document.removeEventListener('contextmenu', handleOnClick);
-    }, [setMenuPosition])
+    },)
 
     useEffect(() => {
         const handleOnClick = (e) => {
-            if (menuIsOpen)
+            if (menuIsOpen) {
+                console.log("shimmy shimmy bang bang")
                 setMenuIsOpen(false);
+            }
         }
         document.addEventListener('mousedown', handleOnClick);
         return () => document.removeEventListener('mousedown', handleOnClick);
@@ -250,15 +259,34 @@ export const Dashboard = ({ code }) => {
                 console.log(err);
             });
     }
+    function handleUpdatePlaylistToBeRemoved(position, playlistID) {
+        setMenuIsOpen(true);
+        setMenuPosition(position);
+        setPlaylistToBeRemoved(playlistID);
+    }
+    // spotify api doesn't allow playlist removal, even if user is the owner, 
+    // thus, thus we unfollow the playlist instead to mimic the behavior
+    function removePlaylist() {
+        spotifyApi.unfollowPlaylist(playlistToBeRemoved.playlistID)
+            .then(res => {
+                console.log("Playlist unfollowed successfully!");
+                setNewPlaylist({...playlistToBeRemoved})
+                setPlaylistToBeRemoved({});
+                setMenuIsOpen(false);
+            }).catch(err => {
+                console.log("Error trying to unfollow a playlist", err);
+            })
+    }
+    
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
-                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} />}
+                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} playlistToBeRemoved={playlistToBeRemoved} removePlaylist={removePlaylist} />}
 
                 <LeftSideBar displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
                     displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}
-                    focusSearchBar={focusSearchBar}
+                    focusSearchBar={focusSearchBar} handleUpdatePlaylistToBeRemoved={handleUpdatePlaylistToBeRemoved}
                 />
 
                 <div className="dashboardCenter">
