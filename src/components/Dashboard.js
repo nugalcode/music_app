@@ -264,8 +264,8 @@ export const Dashboard = ({ code }) => {
         setMenuPosition(position);
         setPlaylistToBeRemoved(playlistID);
     }
-    // spotify api doesn't allow playlist removal, even if user is the owner, 
-    // thus, thus we unfollow the playlist instead to mimic the behavior
+    // spotify api doesn't have an option for playlist removal even if the user is the owner, 
+    // thus we unfollow the playlist instead to mimic the behavior
     function removePlaylist() {
         spotifyApi.unfollowPlaylist(playlistToBeRemoved.playlistID)
             .then(res => {

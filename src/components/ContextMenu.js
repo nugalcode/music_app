@@ -49,16 +49,12 @@ const ContextMenu = ({ position, playlists, userID, addTrackToPlaylist, playlist
 						</div>
 					}
 				</div>
-				<div className="contextMenuItem"> Placeholder </div>
-				<div className="contextMenuItem"> Placeholder </div>
 			</div>
 			:
 			<div className="contextMenu" onMouseDown={(e) => handlePreventBubble(e)} style={style}>
 				<div className="contextMenuItem" onClick={() => handleRemovePlaylist()}>
-					Remove Playlist
+					Unfollow Playlist
 				</div>
-				<div className="contextMenuItem"> Placeholder </div>
-				<div className="contextMenuItem"> Placeholder </div>
 			</div>
 	)
 }
