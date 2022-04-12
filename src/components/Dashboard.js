@@ -220,12 +220,6 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         const handleOnClick = (e) => {
             e.preventDefault();
-            /*if (playlistToBeRemoved !== "") {
-                console.log("hello");
-                const position = { x: e.x, y: e.y };
-                setMenuPosition(position);
-                setMenuIsOpen(true);
-            }*/
         }
         document.addEventListener('contextmenu', handleOnClick);
         return () => document.removeEventListener('contextmenu', handleOnClick);
@@ -234,7 +228,6 @@ export const Dashboard = ({ code }) => {
     useEffect(() => {
         const handleOnClick = (e) => {
             if (menuIsOpen) {
-                console.log("shimmy shimmy bang bang")
                 setMenuIsOpen(false);
             }
         }
