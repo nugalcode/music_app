@@ -89,6 +89,7 @@ export const Dashboard = ({ code }) => {
         }
     }
     const displayLikedSongs = () => {
+        setCurrentPlaylist({});
         setSearchResults([...likedSongs]);
     }
     const playLikedSongs = () => {
@@ -154,7 +155,7 @@ export const Dashboard = ({ code }) => {
         if (!searchTerm) return setSearchResults([]);
         if (!accessToken) return;
         let cancel = false;
-
+        setCurrentPlaylist({});
         spotifyApi.searchTracks(searchTerm).then(res => {
             // if a new request comes in before a request finishes, then cancel previous one
             if (cancel) return
@@ -239,6 +240,7 @@ export const Dashboard = ({ code }) => {
         setMenuIsOpen(!menuIsOpen);
         setMenuPosition(position);
         setTrackToBeAdded(trackURI);
+        setPlaylistToBeRemoved({});
     }
 
     const addTrackToPlaylist = (playlistID) => {
@@ -252,10 +254,10 @@ export const Dashboard = ({ code }) => {
                 console.log(err);
             });
     }
-    function handleUpdatePlaylistToBeRemoved(position, playlistID) {
+    function handleUpdatePlaylistToBeRemoved(position, playlist) {
         setMenuIsOpen(true);
         setMenuPosition(position);
-        setPlaylistToBeRemoved(playlistID);
+        setPlaylistToBeRemoved(playlist);
     }
     // spotify api doesn't have an option for playlist removal even if the user is the owner, 
     // thus we unfollow the playlist instead to mimic the behavior
@@ -270,12 +272,25 @@ export const Dashboard = ({ code }) => {
                 console.log("Error trying to unfollow a playlist", err);
             })
     }
-    
+
+    function removeTrackFromPlaylist() {
+        if (Object.keys(currentPlaylist).length === 0) return;
+        spotifyApi.removeTracksFromPlaylist(currentPlaylist.playlistID, [{ uri: trackToBeAdded }])
+            .then(res => {
+                console.log("Removed Track from Playlist!");
+                // rerender the playlist with the track removed
+                setCurrentPlaylist({...currentPlaylist})
+                setTrackToBeAdded("");
+                setMenuIsOpen(false);
+            }).catch(err => {
+                console.log("Error trying to remove track from playlist");
+            });
+    }
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
-                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} playlistToBeRemoved={playlistToBeRemoved} removePlaylist={removePlaylist} />}
+                {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} playlistToBeRemoved={playlistToBeRemoved} removePlaylist={removePlaylist} currentPlaylist={currentPlaylist} removeTrackFromPlaylist={removeTrackFromPlaylist}/>}
 
                 <LeftSideBar displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
                     displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}

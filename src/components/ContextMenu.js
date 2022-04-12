@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../css/ContextMenu.css';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-const ContextMenu = ({ position, playlists, userID, addTrackToPlaylist, playlistToBeRemoved, removePlaylist }) => {
+const ContextMenu = ({ position, playlists, userID, addTrackToPlaylist, playlistToBeRemoved, removePlaylist, currentPlaylist, removeTrackFromPlaylist }) => {
 	const style = {
 		top: position.y,
 		left: position.x,
@@ -27,6 +27,10 @@ const ContextMenu = ({ position, playlists, userID, addTrackToPlaylist, playlist
 	}
 	const handleRemovePlaylist = () => {
 		removePlaylist();
+	}
+
+	const handleRemoveTrackFromPlaylist = () => {
+		removeTrackFromPlaylist();
     }
 	return (
 		Object.keys(playlistToBeRemoved).length === 0 ?
@@ -49,6 +53,10 @@ const ContextMenu = ({ position, playlists, userID, addTrackToPlaylist, playlist
 						</div>
 					}
 				</div>
+				{userID === currentPlaylist.ownerID &&
+					<div className="contextMenuItem" onMouseDown={(e) => handlePreventBubble(e)} onClick={() => handleRemoveTrackFromPlaylist()}>
+						Remove from this playlist
+					</div>}
 			</div>
 			:
 			<div className="contextMenu" onMouseDown={(e) => handlePreventBubble(e)} style={style}>
