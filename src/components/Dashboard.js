@@ -9,7 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
-import { ACTIONS, playDetailsDispatchContext, playDetailsStateContext } from "../hooks/playDetailsContext";
+import { ACTIONS, playDetailsDispatchContext } from "../hooks/playDetailsContext";
 
 import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
 
@@ -30,7 +30,6 @@ export const ContextApi = React.createContext(spotifyApi);
 
 export const Dashboard = ({ code }) => {
     const  dispatch  = useContext(playDetailsDispatchContext);
-   // const  state  = useContext(playDetailsStateContext);
 
     const accessToken = useAuth(code);
     const [userID, setUserID] = useState("");
