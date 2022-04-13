@@ -3,8 +3,8 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\css"
+    "\\src\\hooks"
   ],
-  "SelectedNode": "\\src\\components\\Dashboard.js",
+  "SelectedNode": "\\src\\components\\AddedPlaylistSuccess.js",
   "PreviewInSolutionExplorer": false
 }
