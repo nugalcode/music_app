@@ -8,7 +8,7 @@ export default function Login() {
     return (
         <div className="login">
             <a className="loginButton" href={AUTH_URL}>
-                Spotify Login
+                <span> Spotify Login </span>
             </a>
         </div>
     )

@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-color: var(--myGray);
 }
 
 .loginButton {
@@ -17,4 +18,12 @@
     text-align: center;
     font-weight: bold;
     font-family: Helvetica, sans-serif;
+    box-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
 }
+    .loginButton span {
+        text-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
+    }
+
+    .loginButton:hover {
+        transform: scale(1.1);
+    }
