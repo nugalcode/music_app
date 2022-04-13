@@ -15,6 +15,7 @@
 .searchForm {
     display: flex;
     align-self: center;
+    justify-content: center;
 }
 .searchBar {
     display: flex;
@@ -22,6 +23,12 @@
     border-radius: 30px;
     margin: 10px;
     outline: none;
+    width: 10vw;
+    transition: width 0.3s ease-in-out;
+}
+
+.searchBar:active,:focus {
+    width: 15vw;
 }
 
 .songsContainer {
