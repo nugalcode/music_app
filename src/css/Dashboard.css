@@ -25,6 +25,10 @@
     outline: none;
     width: 10vw;
     transition: width 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    font-size: 1.3rem;
 }
 
 .searchBar:focus {
@@ -49,5 +53,11 @@
     right: 0;
     height: 60px;
     background-color: var(--myGray);
+}
+
+#dashboardHeader {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
 }
 

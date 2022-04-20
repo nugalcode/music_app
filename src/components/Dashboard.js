@@ -9,6 +9,7 @@ import RightSideBar from './RightSideBar.js';
 import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
+import DashboardTitle from './DashboardTitle.js';
 import { ACTIONS, playDetailsDispatchContext } from "../hooks/playDetailsContext";
 
 import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
@@ -298,17 +299,19 @@ export const Dashboard = ({ code }) => {
                 />
 
                 <div className="dashboardCenter">
-
-                    <form className="searchForm" onSubmit={handleOnSubmit}>
-                        <input
-                            type="search"
-                            className="searchBar"
-                            placeholder="Search Song or Artist"
-                            value={searchTerm}
-                            onChange={handleOnChange}
-                            ref={searchBarRef}
-                        />
-                    </form>
+                    <div id="dashboardHeader"> 
+                        <DashboardTitle showLibrary={showLibrary}/>
+                        <form className="searchForm" onSubmit={handleOnSubmit}>
+                            <input
+                                type="search"
+                                className="searchBar"
+                                placeholder="Search Song or Artist"
+                                value={searchTerm}
+                                onChange={handleOnChange}
+                                ref={searchBarRef}
+                            />
+                        </form>
+                    </div>
 
                     {showLibrary && <YourLibrary displayLikedSongs={displayLikedSongs} playLikedSongs={playLikedSongs} likedSongs={likedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
                     { showSongs && <div className="songsContainer">
