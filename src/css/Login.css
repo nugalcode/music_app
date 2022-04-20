@@ -1,9 +1,30 @@
 .login {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: var(--myGray);
+}
+.informationWrap {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.information {
+    display: flex;
+    padding: 10px;
+    color: white;
+}
+
+.spotifyLogoWrap {
+    display: flex;
+    width: 20%;
+}
+
+.spotifyLogo {
+    width: 100%;
 }
 
 .loginButton {
@@ -19,6 +40,7 @@
     font-weight: bold;
     font-family: Helvetica, sans-serif;
     box-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
+    margin-bottom: 50px;
 }
     .loginButton span {
         text-shadow: 3px 3px 15px rgb(0, 0, 0, 0.9);
@@ -27,3 +49,4 @@
     .loginButton:hover {
         transform: scale(1.1);
     }
+
