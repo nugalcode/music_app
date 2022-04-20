@@ -14,7 +14,7 @@ import { ACTIONS, playDetailsDispatchContext } from "../hooks/playDetailsContext
 import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
 
 const spotifyApi = new SpotifyWebApi({
-    clientId: '8f9b068eeffc4fd0a27b7599b1df9050',
+    clientId: process.env.REACT_APP_CLIENT_ID,
 })
 
 export function convertDuration(ms) {
@@ -51,7 +51,7 @@ export const Dashboard = ({ code }) => {
     const playlistToDisplay = usePlaylistTracks(currentPlaylist);
 
     const [showSongs, setShowSongs] = useState(false);
-    const [showLibrary, setShowLibrary] = useState(false);
+    const [showLibrary, setShowLibrary] = useState(true);
 
     function chooseTrack(track) {
         setPlayingTrack(track);
@@ -119,6 +119,7 @@ export const Dashboard = ({ code }) => {
     }
 
     useEffect(() => {
+        if (!searchResults.length) return;
         setShowSongs(true);
         setShowLibrary(false);
     }, [searchResults]);
