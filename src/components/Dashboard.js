@@ -10,6 +10,7 @@ import TrackHeader from './TrackHeader.js';
 import ContextMenu from './ContextMenu.js';
 import YourLibrary from './YourLibrary.js';
 import DashboardTitle from './DashboardTitle.js';
+import Modal from './Modal.js';
 import { ACTIONS, playDetailsDispatchContext } from "../hooks/playDetailsContext";
 
 import { useLikedSongs, useUserPlaylists, useContainsSavedTracks, usePlaylistTracks } from '../hooks/customHooks';
@@ -287,13 +288,25 @@ export const Dashboard = ({ code }) => {
                 console.log("Error trying to remove track from playlist");
             });
     }
+    /*
+    {
+        isLeftSideBarModal
+            ? <MenuOpenIcon className="menuIcon" onClick={() => setIsLeftSideBarModal(!isLeftSideBarModal)} />
+            : <MenuIcon className="menuIcon" onClick={() => setIsLeftSideBarModal(!isLeftSideBarModal)} />
+    }*/
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
 
                 {menuIsOpen && <ContextMenu position={menuPosition} playlists={userPlaylists} userID={userID} addTrackToPlaylist={addTrackToPlaylist} playlistToBeRemoved={playlistToBeRemoved} removePlaylist={removePlaylist} currentPlaylist={currentPlaylist} removeTrackFromPlaylist={removeTrackFromPlaylist}/>}
+                
+                <Modal children={
+                    <LeftSideBar isLeftSideBarModal={true} displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
+                        displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}
+                        focusSearchBar={focusSearchBar} handleUpdatePlaylistToBeRemoved={handleUpdatePlaylistToBeRemoved}
+                    />} />
 
-                <LeftSideBar displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
+                <LeftSideBar isLeftSideBarModal={false} displayUserLibrary={displayUserLibrary} addNewPlaylist={addNewPlaylist}
                     displayLikedSongs={displayLikedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks}
                     focusSearchBar={focusSearchBar} handleUpdatePlaylistToBeRemoved={handleUpdatePlaylistToBeRemoved}
                 />

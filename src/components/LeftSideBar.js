@@ -4,10 +4,10 @@ import Nav from './Nav';
 import Playlists from './Playlists';
 import NavBottom from './NavBottom';
 
-const LeftSideBar = ({ displayUserLibrary, addNewPlaylist, playlists, handlePlaylistTracks, displayLikedSongs, focusSearchBar, handleUpdatePlaylistToBeRemoved }) => {
+const LeftSideBar = ({ isLeftSideBarModal, displayUserLibrary, addNewPlaylist, playlists, handlePlaylistTracks, displayLikedSongs, focusSearchBar, handleUpdatePlaylistToBeRemoved }) => {
 
     return (
-        <div className="LeftSideBar">
+        <div className={isLeftSideBarModal ? "LeftSideBar sideBarModal" : "LeftSideBar"}>
             <Nav displayUserLibrary={displayUserLibrary} focusSearchBar={focusSearchBar}/>
             <NavBottom addNewPlaylist={addNewPlaylist} displayLikedSongs={displayLikedSongs} />
             <Playlists playlists={playlists} handlePlaylistTracks={handlePlaylistTracks} handleUpdatePlaylistToBeRemoved={handleUpdatePlaylistToBeRemoved }/>

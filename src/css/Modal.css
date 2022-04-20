@@ -69,3 +69,20 @@
     z-index: 9999;
     background-color: black;
 }
+
+.menuIcon {
+    visibility: hidden;
+    position: fixed;
+    top: 5%;
+    left: 10%;
+    z-index: 9999;
+    color: white;
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    .menuIcon {
+        visibility: visible;
+    }
+}
