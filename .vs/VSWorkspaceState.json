@@ -5,9 +5,8 @@
     "\\server",
     "\\src",
     "\\src\\components",
-    "\\src\\css",
-    "\\src\\hooks"
+    "\\src\\imgs"
   ],
-  "SelectedNode": "\\src\\components\\Player.js",
+  "SelectedNode": "\\src\\components\\Login.js",
   "PreviewInSolutionExplorer": false
 }
