@@ -312,7 +312,7 @@ export const Dashboard = ({ code }) => {
 
                     {showLibrary && <YourLibrary displayLikedSongs={displayLikedSongs} playLikedSongs={playLikedSongs} likedSongs={likedSongs} playlists={userPlaylists} handlePlaylistTracks={handlePlaylistTracks} changeUrisByPlaylist={changeUrisByPlaylist}/>}
                     { showSongs && <div className="songsContainer">
-                        <TrackHeader />
+                        {searchResults.length > 0 && <TrackHeader />}
                         {searchResults.map((track, index) => {
                             return (
                                 <Track
