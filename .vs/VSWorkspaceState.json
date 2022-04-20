@@ -1,10 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
+    "\\server",
     "\\src",
     "\\src\\components",
+    "\\src\\css",
     "\\src\\hooks"
   ],
-  "SelectedNode": "\\src\\components\\AddedPlaylistSuccess.js",
+  "SelectedNode": "\\src\\components\\Player.js",
   "PreviewInSolutionExplorer": false
 }

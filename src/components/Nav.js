@@ -1,5 +1,4 @@
 import React from 'react';
-import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
@@ -16,19 +15,14 @@ const Nav = ({ displayUserLibrary, focusSearchBar}) => {
     return (
         <div className="nav">
 
-            <div className="navItemWrap"> 
-                <HomeIcon className="navIcon"/>
-                <div>  Home  </div>
+            <div className="navItemWrap" onClick={() => handleDisplayLibrary()}>
+                <LibraryMusicIcon className="navIcon" />
+                <div> Your Library </div>
             </div>
 
             <div className="navItemWrap" onClick={() => handleSearchFocus()}>
                 <SearchIcon className="navIcon" />
                 <div> Search </div>
-            </div>
-
-            <div className="navItemWrap" onClick={() => handleDisplayLibrary()}>
-                <LibraryMusicIcon className="navIcon"/>
-                <div> Your Library </div>
             </div>
 
         </div>
