@@ -77,3 +77,9 @@
     }
 }
 
+@media screen and (max-width: 1023px) {
+    .playerWrap {
+        height: 100px;
+    }
+}
+
