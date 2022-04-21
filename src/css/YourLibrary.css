@@ -71,6 +71,8 @@
 .playlistsPreviewContainer {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
 }
 
 /* 
@@ -153,5 +155,26 @@
     transform: translateY(0); 
 }
 
+@media screen and (max-width: 705px) {
+    .playlistPreview {
+        width: 45%;
+        height: auto;
+    }
+
+    .likedSongsPreview {
+        width: 90%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 498px) {
+    .playlistPreview {
+        width: 90%;
+    }
+
+    .likedSongsPreview {
+        width: 90%;
+    }
+}
 
 
