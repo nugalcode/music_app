@@ -7,9 +7,6 @@ const Modal = ({ children }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const stopPropagation = (e) => {
-        e.stopPropagation();
-    }
     return (
         <div className="leftSideBarModal">
             {isOpen ?
