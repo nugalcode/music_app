@@ -11,7 +11,7 @@ const Modal = ({ children }) => {
         e.stopPropagation();
     }
     return (
-        <>
+        <div className="leftSideBarModal">
             {isOpen ?
                 <MenuOpenIcon className="menuIcon" onClick={() => setIsOpen(false)}/>
                 :
@@ -20,12 +20,12 @@ const Modal = ({ children }) => {
             {
             isOpen &&
                 <div className="modal" onClick={() => setIsOpen(!isOpen)}>
-                    <div className="contentWrap" onClick={(e) => stopPropagation(e)}>
+                    <div className="contentWrap" >
                         {children}
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

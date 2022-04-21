@@ -53,6 +53,11 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
     const timerFinished = () => {
         setPlaylistAdded(false);
     }
+
+    const handleOpenModalClick = (e) => {
+        e.stopPropagation();
+        setModalIsOpen(true)
+    }
     return (
         <div className="navBottom">
             {playlistAdded && <AddedPlaylistSuccess timerFinished={timerFinished}/>}
@@ -77,7 +82,7 @@ const NavBottom = ({ addNewPlaylist, displayLikedSongs }) => {
                 </div>
             }
 
-            <div className="navItemWrap" onClick={() => setModalIsOpen(true)}>
+            <div className="navItemWrap" onClick={(e) => handleOpenModalClick(e)}>
                 <AddBoxIcon className="navIcon" />
                 <div>  Create Playlist  </div>
             </div>

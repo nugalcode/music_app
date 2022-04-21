@@ -5,8 +5,9 @@
     "\\server",
     "\\src",
     "\\src\\components",
+    "\\src\\css",
     "\\src\\imgs"
   ],
-  "SelectedNode": "\\src\\components\\Login.js",
+  "SelectedNode": "\\src\\components\\LeftSideBar.js",
   "PreviewInSolutionExplorer": false
 }
