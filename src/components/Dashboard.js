@@ -108,7 +108,7 @@ export const Dashboard = ({ code }) => {
         spotifyApi.createPlaylist(newPlaylistName, { 'description': 'test description', 'public': true })
             .then(function (data) {
                 console.log('Created playlist!');
-                console.log(data.body);
+                //console.log(data.body);
                 setNewPlaylist(data.body)
             }, function (err) {
                 console.log('Error trying to create playlist!', err);
@@ -288,7 +288,7 @@ export const Dashboard = ({ code }) => {
                 console.log("Error trying to remove track from playlist");
             });
     }
-    
+
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">
