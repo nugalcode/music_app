@@ -288,12 +288,7 @@ export const Dashboard = ({ code }) => {
                 console.log("Error trying to remove track from playlist");
             });
     }
-    /*
-    {
-        isLeftSideBarModal
-            ? <MenuOpenIcon className="menuIcon" onClick={() => setIsLeftSideBarModal(!isLeftSideBarModal)} />
-            : <MenuIcon className="menuIcon" onClick={() => setIsLeftSideBarModal(!isLeftSideBarModal)} />
-    }*/
+    
     return (
         <ContextApi.Provider value={spotifyApi}>
             <div className="dashboard">

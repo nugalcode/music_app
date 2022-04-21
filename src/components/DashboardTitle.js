@@ -7,7 +7,7 @@ const DashboardTitle = ({showLibrary}) => {
             {showLibrary ? 
                 <h1> Your Library </h1>
                 :
-                <h1> Search Results </h1>
+                <h1> Spotify Music Player </h1>
             }
         </div>
     )
