@@ -132,5 +132,11 @@
     }
 }
 
+@media screen and (max-width: 400px) {
+    .track img {
+        display: none;
+    }
+}
+
 
 
