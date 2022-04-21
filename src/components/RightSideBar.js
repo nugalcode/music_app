@@ -6,7 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const RightSideBar = () => {
     return (
-        <div className="RightSideBar">
+        <div className="RightSideBar" title="for aesthetics only :)">
             <div className="friendActivity">
                     <div className="rightSideBarTitle">
                         <span> Friend Activity </span>

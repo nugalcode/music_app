@@ -10,6 +10,10 @@
     flex-shrink: 0;
 }
 
+.RightSideBar:hover {
+    cursor: not-allowed;
+}
+
 .friendActivity {
     display: flex;
     flex-direction: column;
