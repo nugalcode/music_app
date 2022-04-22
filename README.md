@@ -2,6 +2,7 @@
 
 This React project uses the spotify API with other wrapper libraries to fetch spotify data. The app uses the data to search and play tracks.
 
+For more information about this app in depth: 
 [Docs Demos](https://docs.google.com/document/d/1C8v7zAemUZ1iJDIxxE02xptXoQHYDJpya5S-GOw6O0Y/edit?usp=sharing)
 
 ## Features
